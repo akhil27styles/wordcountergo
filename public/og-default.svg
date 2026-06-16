@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fafafa"/>
+      <stop offset="100%" stop-color="#ffffff"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fb6514"/>
+      <stop offset="100%" stop-color="#e05500"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1200" height="4" fill="url(#accent)"/>
+  <text x="60" y="220" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="700" fill="#171717">Word Counter</text>
+  <text x="60" y="290" font-family="system-ui, -apple-system, sans-serif" font-size="28" fill="#4d4d4d">Free online word &amp; character counter</text>
+  <text x="60" y="340" font-family="system-ui, -apple-system, sans-serif" font-size="28" fill="#4d4d4d">Real-time. Private. Multi-language.</text>
+  <rect x="60" y="400" rx="8" ry="8" width="220" height="48" fill="#fb6514"/>
+  <text x="170" y="431" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="600" fill="#ffffff" text-anchor="middle">wordcountergo.com</text>
+  <circle cx="1080" cy="180" r="180" fill="#fb6514" opacity="0.06"/>
+  <circle cx="1140" cy="140" r="120" fill="#fb6514" opacity="0.08"/>
+  <circle cx="1020" cy="220" r="90" fill="#fb6514" opacity="0.1"/>
+</svg>

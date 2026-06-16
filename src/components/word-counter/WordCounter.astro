@@ -1,0 +1,862 @@
+<div id="word-counter-root" class="max-w-4xl mx-auto">
+  <div class="bg-canvas rounded-lg shadow-level-4 relative" id="word-counter-card">
+    <div class="flex items-center justify-end px-4 sm:px-6 py-3 border-b border-hairline">
+      <div class="flex items-center gap-2">
+        <button id="copy-btn" class="inline-flex items-center gap-1.5 h-8 max-sm:min-h-[44px] px-3 rounded-md text-caption text-body hover:bg-canvas-soft-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-link" aria-label="Copy text" data-i18n="tool.copy" data-i18n-attr="aria-label">
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span data-i18n="tool.copy">Copy</span>
+        </button>
+        <button id="clear-btn" class="inline-flex items-center gap-1.5 h-8 max-sm:min-h-[44px] px-3 rounded-md text-caption text-body hover:bg-canvas-soft-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-link" aria-label="Clear text" data-i18n="tool.clear" data-i18n-attr="aria-label">
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          <span data-i18n="tool.clear">Clear</span>
+        </button>
+        <button id="download-btn" class="inline-flex items-center gap-1.5 h-8 max-sm:min-h-[44px] px-3 rounded-md text-caption text-body hover:bg-canvas-soft-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-link" aria-label="Download text" data-i18n="tool.export" data-i18n-attr="aria-label">
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span data-i18n="tool.export">Export</span>
+        </button>
+        <button id="upload-btn" class="inline-flex items-center gap-1.5 h-8 max-sm:min-h-[44px] px-3 rounded-md text-caption text-body hover:bg-canvas-soft-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-link" aria-label="Upload .txt, .docx, or .pdf" data-i18n="tool.upload" data-i18n-attr="aria-label">
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <span data-i18n="tool.upload">Upload</span>
+        </button>
+        <input type="file" id="file-input" accept=".txt,.docx,.doc,.pdf" hidden>
+      </div>
+    </div>
+
+    <div class="p-4 sm:p-6">
+      <textarea id="text-input" class="w-full h-64 sm:h-80 resize-y bg-canvas-soft text-body-md text-ink rounded-lg border border-hairline p-4 focus:outline-none focus:ring-2 focus:ring-link focus:border-transparent placeholder:text-mute font-sans" placeholder="Paste or type your text here... Works with any language." spellcheck="true" aria-label="Text input" data-i18n="tool.textarea-placeholder" data-i18n-attr="placeholder"></textarea>
+    </div>
+
+    <div class="px-4 sm:px-6 pb-4" role="group" data-i18n="tool.stats.aria" data-i18n-attr="aria-label">
+      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
+        <div class="bg-canvas-soft rounded-lg p-3 text-center border border-hairline">
+          <p class="text-caption-mono font-mono text-mute uppercase tracking-wider" data-i18n="tool.stats.words">Words</p>
+          <p id="stat-words" class="text-display-sm text-ink font-semibold tabular-nums mt-0.5">0</p>
+        </div>
+        <div class="bg-canvas-soft rounded-lg p-3 text-center border border-hairline">
+          <p class="text-caption-mono font-mono text-mute uppercase tracking-wider" data-i18n="tool.stats.characters">Characters</p>
+          <p id="stat-chars" class="text-display-sm text-ink font-semibold tabular-nums mt-0.5">0</p>
+        </div>
+        <div class="bg-canvas-soft rounded-lg p-3 text-center border border-hairline">
+          <p class="text-caption-mono font-mono text-mute uppercase tracking-wider" data-i18n="tool.stats.spaces">Spaces</p>
+          <p id="stat-spaces" class="text-display-sm text-ink font-semibold tabular-nums mt-0.5">0</p>
+        </div>
+        <div class="bg-canvas-soft rounded-lg p-3 text-center border border-hairline">
+          <p class="text-caption-mono font-mono text-mute uppercase tracking-wider" data-i18n="tool.stats.sentences">Sentences</p>
+          <p id="stat-sentences" class="text-display-sm text-ink font-semibold tabular-nums mt-0.5">0</p>
+        </div>
+        <div class="bg-canvas-soft rounded-lg p-3 text-center border border-hairline">
+          <p class="text-caption-mono font-mono text-mute uppercase tracking-wider" data-i18n="tool.stats.paragraphs">Paragraphs</p>
+          <p id="stat-paragraphs" class="text-display-sm text-ink font-semibold tabular-nums mt-0.5">0</p>
+        </div>
+        <div class="bg-canvas-soft rounded-lg p-3 text-center border border-hairline">
+          <p class="text-caption-mono font-mono text-mute uppercase tracking-wider" data-i18n="tool.stats.lines">Lines</p>
+          <p id="stat-lines" class="text-display-sm text-ink font-semibold tabular-nums mt-0.5">0</p>
+        </div>
+        <div class="bg-canvas-soft rounded-lg p-3 text-center border border-hairline">
+          <p class="text-caption-mono font-mono text-mute uppercase tracking-wider" data-i18n="tool.stats.pages">Pages</p>
+          <p id="stat-pages" class="text-display-sm text-ink font-semibold tabular-nums mt-0.5">0</p>
+        </div>
+        <div class="bg-canvas-soft rounded-lg p-3 text-center border border-hairline">
+          <p class="text-caption-mono font-mono text-mute uppercase tracking-wider" data-i18n="tool.stats.unique">Unique</p>
+          <p id="stat-unique" class="text-display-sm text-ink font-semibold tabular-nums mt-0.5">0</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="px-4 sm:px-6 pb-4 sm:pb-6">
+      <div class="bg-canvas-soft rounded-lg p-4 border border-hairline">
+        <p class="text-caption-mono font-mono text-mute uppercase tracking-wider mb-3" data-i18n="tool.find.title">Find & Replace</p>
+        <div class="flex flex-wrap gap-2">
+          <input id="find-input" type="text" placeholder="Find..." class="flex-1 min-w-[100px] h-8 max-sm:min-h-[44px] px-3 rounded-md bg-canvas border border-hairline text-caption text-ink placeholder:text-mute focus:outline-none focus:ring-2 focus:ring-link focus:border-transparent" aria-label="Find text" data-i18n="tool.find.placeholder" data-i18n-attr="placeholder">
+          <input id="replace-input" type="text" placeholder="Replace with..." class="flex-1 min-w-[100px] h-8 max-sm:min-h-[44px] px-3 rounded-md bg-canvas border border-hairline text-caption text-ink placeholder:text-mute focus:outline-none focus:ring-2 focus:ring-link focus:border-transparent" aria-label="Replace text" data-i18n="tool.replace.placeholder" data-i18n-attr="placeholder">
+          <button id="replace-btn" class="inline-flex items-center h-8 max-sm:min-h-[44px] px-3 rounded-md bg-link text-white text-caption font-medium hover:bg-link-deep transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-link cursor-pointer" data-i18n="tool.find.replace-all">Replace All</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="px-4 sm:px-6 pb-4 sm:pb-6">
+      <div class="bg-canvas-soft rounded-lg p-4 border border-hairline">
+        <p class="text-caption-mono font-mono text-mute uppercase tracking-wider mb-3" data-i18n="tool.case.title">Case Converter</p>
+        <div class="flex flex-wrap gap-2">
+          <button data-case="sentence" class="case-btn inline-flex items-center h-8 max-sm:min-h-[44px] px-3 rounded-md bg-canvas border border-hairline text-caption text-body font-medium hover:bg-canvas-soft-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-link cursor-pointer" data-i18n="tool.case.sentence">Sentence case</button>
+          <button data-case="lower" class="case-btn inline-flex items-center h-8 max-sm:min-h-[44px] px-3 rounded-md bg-canvas border border-hairline text-caption text-body font-medium hover:bg-canvas-soft-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-link cursor-pointer" data-i18n="tool.case.lower">lower case</button>
+          <button data-case="upper" class="case-btn inline-flex items-center h-8 max-sm:min-h-[44px] px-3 rounded-md bg-canvas border border-hairline text-caption text-body font-medium hover:bg-canvas-soft-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-link cursor-pointer" data-i18n="tool.case.upper">UPPER CASE</button>
+          <button data-case="title" class="case-btn inline-flex items-center h-8 max-sm:min-h-[44px] px-3 rounded-md bg-canvas border border-hairline text-caption text-body font-medium hover:bg-canvas-soft-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-link cursor-pointer" data-i18n="tool.case.title-case">Title Case</button>
+          <button data-case="toggle" class="case-btn inline-flex items-center h-8 max-sm:min-h-[44px] px-3 rounded-md bg-canvas border border-hairline text-caption text-body font-medium hover:bg-canvas-soft-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-link cursor-pointer" data-i18n="tool.case.toggle">tOGGLE cASE</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="px-4 sm:px-6 pb-4 grid sm:grid-cols-2 gap-4">
+      <div class="bg-canvas-soft rounded-lg p-4 border border-hairline">
+        <p class="text-caption-mono font-mono text-mute uppercase tracking-wider mb-3" data-i18n="tool.time.title">Reading & Speaking Time</p>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <p class="text-caption text-mute" data-i18n="tool.time.reading">Reading</p>
+            <p id="stat-reading" class="text-body-md text-ink font-semibold tabular-nums">0 min</p>
+          </div>
+          <div>
+            <p class="text-caption text-mute" data-i18n="tool.time.speaking">Speaking</p>
+            <p id="stat-speaking" class="text-body-md text-ink font-semibold tabular-nums">0 min</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-canvas-soft rounded-lg p-4 border border-hairline">
+        <p class="text-caption-mono font-mono text-mute uppercase tracking-wider mb-3" data-i18n="tool.goal.title">Word & Character Goal</p>
+        <div class="space-y-3">
+          <div>
+            <div class="flex justify-between text-caption text-mute mb-1">
+              <span data-i18n="tool.goal.words">Words</span>
+              <span id="goal-words-label"><span id="goal-words-count">0</span> / <select id="goal-word-target" aria-label="Word goal target" class="bg-transparent text-ink border-none outline-none cursor-pointer text-caption max-sm:text-body-sm font-medium" data-i18n="tool.goal.words" data-i18n-attr="aria-label"><option value="100">100</option><option value="250">250</option><option value="500">500</option><option value="1000" selected>1000</option><option value="2000">2000</option></select></span>
+            </div>
+            <div class="w-full h-2 bg-hairline rounded-full overflow-hidden">
+              <div id="goal-words-bar" class="h-full bg-cyan rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between text-caption text-mute mb-1">
+              <span data-i18n="tool.goal.characters">Characters</span>
+              <span id="goal-chars-label"><span id="goal-chars-count">0</span> / <select id="goal-char-target" aria-label="Character goal target" class="bg-transparent text-ink border-none outline-none cursor-pointer text-caption max-sm:text-body-sm font-medium" data-i18n="tool.goal.characters" data-i18n-attr="aria-label"><option value="500">500</option><option value="1000">1000</option><option value="2500">2500</option><option value="5000" selected>5000</option><option value="10000">10000</option></select></span>
+            </div>
+            <div class="w-full h-2 bg-hairline rounded-full overflow-hidden">
+              <div id="goal-chars-bar" class="h-full bg-violet rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="px-4 sm:px-6 pb-4 grid sm:grid-cols-2 gap-4">
+      <div class="bg-canvas-soft rounded-lg p-4 border border-hairline">
+        <p class="text-caption-mono font-mono text-mute uppercase tracking-wider mb-3" data-i18n="tool.keywords.title">Keyword Density</p>
+        <div id="keyword-list" class="space-y-1.5 max-h-48 overflow-y-auto">
+          <p class="text-caption text-mute" data-i18n="tool.keywords.empty">Start typing to see keywords...</p>
+        </div>
+      </div>
+
+      <div class="bg-canvas-soft rounded-lg p-4 border border-hairline">
+        <p class="text-caption-mono font-mono text-mute uppercase tracking-wider mb-3" data-i18n="tool.social.title">Social Media Limits</p>
+        <div class="space-y-3">
+          <div>
+            <div class="flex justify-between text-caption text-mute mb-1">
+              <span class="flex items-center gap-1.5 truncate max-sm:text-[11px]">
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16z"/><path d="M4 20l6.768 -6.768m2.46 -2.46L20 4"/></svg>
+                <span data-i18n="tool.social.twitter">Twitter / X</span>
+              </span>
+              <span id="social-twitter" class="tabular-nums" aria-live="polite">0 / 280</span>
+            </div>
+            <div class="w-full h-1.5 bg-hairline rounded-full overflow-hidden">
+              <div id="social-twitter-bar" class="h-full rounded-full transition-all" style="width: 0%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between text-caption text-mute mb-1">
+              <span class="flex items-center gap-1.5 truncate max-sm:text-[11px]">
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="8" r="5"/><path d="M2 21v-2a5 5 0 0 1 5-5h4"/><path d="M17.5 11.5L22 16l-4.5 4.5"/><path d="M22 16h-9"/></svg>
+                <span data-i18n="tool.social.google">Google</span>
+              </span>
+              <span id="social-google" class="tabular-nums" aria-live="polite">0 / 160</span>
+            </div>
+            <div class="w-full h-1.5 bg-hairline rounded-full overflow-hidden">
+              <div id="social-google-bar" class="h-full rounded-full transition-all" style="width: 0%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between text-caption text-mute mb-1">
+              <span class="flex items-center gap-1.5 truncate max-sm:text-[11px]">
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                <span data-i18n="tool.social.instagram">Instagram</span>
+              </span>
+              <span id="social-instagram" class="tabular-nums" aria-live="polite">0 / 2200</span>
+            </div>
+            <div class="w-full h-1.5 bg-hairline rounded-full overflow-hidden">
+              <div id="social-instagram-bar" class="h-full rounded-full transition-all" style="width: 0%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between text-caption text-mute mb-1">
+              <span class="flex items-center gap-1.5 truncate max-sm:text-[11px]">
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7.917C21 15.419 15.75 21 10 21c-2.5 0-4.5-1.5-6-3l1-3c-1-1.5-1-4 0-6l3 1c1-1 2.5-1 4 0l2-2"/></svg>
+                <span data-i18n="tool.social.tiktok">TikTok</span>
+              </span>
+              <span id="social-tiktok" class="tabular-nums" aria-live="polite">0 / 2200</span>
+            </div>
+            <div class="w-full h-1.5 bg-hairline rounded-full overflow-hidden">
+              <div id="social-tiktok-bar" class="h-full rounded-full transition-all" style="width: 0%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between text-caption text-mute mb-1">
+              <span class="flex items-center gap-1.5 truncate max-sm:text-[11px]">
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.94 2C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+                <span data-i18n="tool.social.youtube">YouTube</span>
+              </span>
+              <span id="social-youtube" class="tabular-nums" aria-live="polite">0 / 5000</span>
+            </div>
+            <div class="w-full h-1.5 bg-hairline rounded-full overflow-hidden">
+              <div id="social-youtube-bar" class="h-full rounded-full transition-all" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="px-4 sm:px-6 pb-4 grid sm:grid-cols-2 gap-4">
+      <div class="bg-canvas-soft rounded-lg p-4 border border-hairline">
+        <p class="text-caption-mono font-mono text-mute uppercase tracking-wider mb-3" data-i18n="tool.readability.title">Readability</p>
+        <div class="space-y-2">
+          <div class="flex justify-between">
+            <span class="text-caption text-mute" data-i18n="tool.readability.flesch">Flesch Reading Ease</span>
+            <span id="stat-flesch" class="text-body-sm text-ink font-semibold tabular-nums">-</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-caption text-mute" data-i18n="tool.readability.kincaid">Flesch-Kincaid Grade</span>
+            <span id="stat-fk-grade" class="text-body-sm text-ink font-semibold tabular-nums">-</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-caption text-mute" data-i18n="tool.readability.gunning">Gunning Fog Index</span>
+            <span id="stat-gunning" class="text-body-sm text-ink font-semibold tabular-nums">-</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-caption text-mute" data-i18n="tool.readability.avg-sentence">Avg. Words / Sentence</span>
+            <span id="stat-avg-sentence" class="text-body-sm text-ink font-semibold tabular-nums">0</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-caption text-mute" data-i18n="tool.readability.avg-syllables">Avg. Syllables / Word</span>
+            <span id="stat-avg-syllables" class="text-body-sm text-ink font-semibold tabular-nums">0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-canvas-soft rounded-lg p-4 border border-hairline">
+        <p class="text-caption-mono font-mono text-mute uppercase tracking-wider mb-3" data-i18n="tool.details.title">Text Details</p>
+        <div class="space-y-2">
+          <div class="flex justify-between">
+            <span class="text-caption text-mute" data-i18n="tool.details.longest-word">Longest word</span>
+            <span id="stat-longest" class="text-body-sm text-ink font-semibold truncate max-w-[200px] text-end">-</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-caption text-mute" data-i18n="tool.details.shortest-word">Shortest word</span>
+            <span id="stat-shortest" class="text-body-sm text-ink font-semibold">-</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-caption text-mute" data-i18n="tool.details.syllables">Total syllables</span>
+            <span id="stat-syllables" class="text-body-sm text-ink font-semibold tabular-nums">0</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-caption text-mute" data-i18n="tool.details.avg-length">Avg. word length</span>
+            <span id="stat-avg-length" class="text-body-sm text-ink font-semibold tabular-nums">0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="px-4 sm:px-6 pb-4 sm:pb-6">
+      <div class="bg-canvas-soft rounded-lg p-4 border border-hairline">
+        <p class="text-caption-mono font-mono text-mute uppercase tracking-wider mb-3" data-i18n="tool.letter-frequency.title">Letter Frequency</p>
+        <div id="letter-freq" class="flex flex-wrap gap-1">
+          <span class="text-caption text-mute" data-i18n="tool.letter-frequency.empty">Start typing to see letter frequency...</span>
+        </div>
+      </div>
+    </div>
+    <div id="drop-zone" class="absolute inset-0 z-10 bg-canvas/90 border-2 border-dashed border-link rounded-lg flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-200">
+      <div class="text-center px-4">
+        <svg class="mx-auto mb-2" aria-hidden="true" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <p class="text-body-md text-link font-semibold" data-i18n="tool.drop.title">Drop file here</p>
+        <p class="text-caption text-mute mt-1" data-i18n="tool.drop.formats">.txt, .docx, .doc, .pdf</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" role="status" aria-live="polite" class="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 left-4 sm:left-auto z-50 px-4 py-3 sm:px-4 sm:py-2 rounded-lg bg-ink text-canvas text-body-sm font-medium shadow-level-4 transition-all duration-300 opacity-0 translate-y-2 pointer-events-none text-center sm:text-start" data-i18n="tool.copy-toast">
+  Copied!
+</div>
+
+<script>
+  type CaseType = 'sentence' | 'lower' | 'upper' | 'title' | 'toggle';
+
+  const textarea = document.getElementById('text-input') as HTMLTextAreaElement;
+
+  const statWords = document.getElementById('stat-words')!;
+  const statChars = document.getElementById('stat-chars')!;
+  const statSpaces = document.getElementById('stat-spaces')!;
+  const statSentences = document.getElementById('stat-sentences')!;
+  const statParagraphs = document.getElementById('stat-paragraphs')!;
+  const statLines = document.getElementById('stat-lines')!;
+  const statPages = document.getElementById('stat-pages')!;
+  const statUnique = document.getElementById('stat-unique')!;
+  const statReading = document.getElementById('stat-reading')!;
+  const statSpeaking = document.getElementById('stat-speaking')!;
+  const statFlesch = document.getElementById('stat-flesch')!;
+  const statFK = document.getElementById('stat-fk-grade')!;
+  const statGunning = document.getElementById('stat-gunning')!;
+  const statAvgSentence = document.getElementById('stat-avg-sentence')!;
+  const statAvgSyllables = document.getElementById('stat-avg-syllables')!;
+  const statLongest = document.getElementById('stat-longest')!;
+  const statShortest = document.getElementById('stat-shortest')!;
+  const statSyllables = document.getElementById('stat-syllables')!;
+  const statAvgLength = document.getElementById('stat-avg-length')!;
+
+  const keywordList = document.getElementById('keyword-list')!;
+  const letterFreq = document.getElementById('letter-freq')!;
+
+  const goalWordsCount = document.getElementById('goal-words-count')!;
+  const goalCharsCount = document.getElementById('goal-chars-count')!;
+  const goalWordsBar = document.getElementById('goal-words-bar')!;
+  const goalCharsBar = document.getElementById('goal-chars-bar')!;
+  const goalWordTarget = document.getElementById('goal-word-target') as HTMLSelectElement;
+  const goalCharTarget = document.getElementById('goal-char-target') as HTMLSelectElement;
+
+  const socialTwitter = document.getElementById('social-twitter')!;
+  const socialGoogle = document.getElementById('social-google')!;
+  const socialInstagram = document.getElementById('social-instagram')!;
+  const socialTiktok = document.getElementById('social-tiktok')!;
+  const socialYoutube = document.getElementById('social-youtube')!;
+  const socialTwitterBar = document.getElementById('social-twitter-bar')!;
+  const socialGoogleBar = document.getElementById('social-google-bar')!;
+  const socialInstagramBar = document.getElementById('social-instagram-bar')!;
+  const socialTiktokBar = document.getElementById('social-tiktok-bar')!;
+  const socialYoutubeBar = document.getElementById('social-youtube-bar')!;
+
+  function segments(text: string, granularity: 'word' | 'sentence' | 'grapheme' = 'word'): string[] {
+    try {
+      const seg = new Intl.Segmenter(undefined, { granularity });
+      return [...seg.segment(text)].map(s => s.segment);
+    } catch {
+      if (granularity === 'word') return text.match(/[\p{L}\p{M}'\u2000-\u206F\u2E00-\u2E7F'!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?`~]+/gu) || [];
+      if (granularity === 'sentence') return text.match(/[^.!?\n]+[.!?]*/g) || [];
+      return [...text];
+    }
+  }
+
+  function getWords(text: string): string[] {
+    try {
+      return segments(text, 'word').filter(w => /[\p{L}\p{M}]/u.test(w));
+    } catch {
+      return text.match(/[\p{L}\p{M}']+/gu) || [];
+    }
+  }
+
+  function countSyllables(word: string): number {
+    word = word.toLowerCase().replace(/[^a-z]/g, '');
+    if (!word) return 0;
+    if (word.length <= 3) return 1;
+    word = word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '');
+    word = word.replace(/^y/, '');
+    const matches = word.match(/[aeiouy]{1,2}/g);
+    return matches ? matches.length : 1;
+  }
+
+  function fleschReadingEase(totalSyllables: number, totalWords: number, totalSentences: number): number {
+    if (totalWords === 0 || totalSentences === 0) return 0;
+    return 206.835 - 1.015 * (totalWords / totalSentences) - 84.6 * (totalSyllables / totalWords);
+  }
+
+  function fleschKincaid(totalSyllables: number, totalWords: number, totalSentences: number): number {
+    if (totalWords === 0 || totalSentences === 0) return 0;
+    return 0.39 * (totalWords / totalSentences) + 11.8 * (totalSyllables / totalWords) - 15.59;
+  }
+
+  function gunningFog(totalWords: number, totalSentences: number, complexWords: number): number {
+    if (totalSentences === 0) return 0;
+    return 0.4 * ((totalWords / totalSentences) + 100 * (complexWords / totalWords));
+  }
+
+  function update() {
+    const text = textarea.value;
+    const charsNoSpace = text.replace(/\s/g, '').length;
+    const chars = charsNoSpace;
+    const words = getWords(text);
+    const wordCount = words.length;
+    const uniqueWords = new Set(words.map(w => w.toLowerCase())).size;
+
+    const lines = charsNoSpace > 0 ? text.split('\n').length : 0;
+    const paragraphs = text ? text.split(/\n\s*\n/).filter(p => p.trim()).length : 0;
+    const sentences = segments(text, 'sentence').filter(s => s.trim()).length;
+
+    const pages = wordCount > 0 ? Math.max(1, Math.round(wordCount / 250)) : 0;
+
+    const syllables = words.reduce((s, w) => s + countSyllables(w), 0);
+    const complexWords = words.filter(w => countSyllables(w) >= 3).length;
+
+    statWords.textContent = String(wordCount);
+    statChars.textContent = String(chars);
+  statSpaces.textContent = String(text.length - charsNoSpace);
+  statSentences.textContent = String(sentences);
+    statParagraphs.textContent = String(paragraphs);
+    statLines.textContent = String(lines);
+    statPages.textContent = String(pages);
+    statUnique.textContent = String(uniqueWords);
+    statSyllables.textContent = String(syllables);
+
+    const readingTime = wordCount > 0 ? Math.ceil(wordCount / 200) : 0;
+    const speakingTime = wordCount > 0 ? Math.ceil(wordCount / 130) : 0;
+    statReading.textContent = `${readingTime} min`;
+    statSpeaking.textContent = `${speakingTime} min`;
+
+    const avgSentence = sentences > 0 ? (wordCount / sentences) : 0;
+    const avgSyllableWord = wordCount > 0 ? (syllables / wordCount) : 0;
+    const avgWordLength = wordCount > 0 ? words.reduce((s, w) => s + w.length, 0) / wordCount : 0;
+
+    statAvgSentence.textContent = avgSentence.toFixed(1);
+    statAvgSyllables.textContent = avgSyllableWord.toFixed(1);
+    statAvgLength.textContent = avgWordLength.toFixed(1);
+
+    if (wordCount > 0 && sentences > 0) {
+      const flesch = fleschReadingEase(syllables, wordCount, sentences);
+      const fk = fleschKincaid(syllables, wordCount, sentences);
+      const gunning = gunningFog(wordCount, sentences, complexWords);
+      statFlesch.textContent = flesch.toFixed(1);
+      statFK.textContent = fk.toFixed(1);
+      statGunning.textContent = gunning.toFixed(1);
+    } else {
+      statFlesch.textContent = '-'; statFK.textContent = '-'; statGunning.textContent = '-';
+    }
+
+    if (wordCount > 0) {
+      const sorted = [...words].sort((a, b) => b.length - a.length);
+      statLongest.textContent = sorted[0];
+      statShortest.textContent = sorted[sorted.length - 1];
+    } else {
+      statLongest.textContent = '-'; statShortest.textContent = '-';
+    }
+
+    const wordFreq = new Map<string, number>();
+    words.forEach(w => {
+      const lower = w.toLowerCase();
+      wordFreq.set(lower, (wordFreq.get(lower) || 0) + 1);
+    });
+    const sortedKeywords = [...wordFreq.entries()].sort((a, b) => b[1] - a[1]).slice(0, 10);
+
+    if (sortedKeywords.length > 0) {
+      keywordList.innerHTML = sortedKeywords.map(([word, count]) => {
+        const pct = ((count / wordCount) * 100).toFixed(1);
+        return `<div class="flex items-center justify-between py-1">
+          <span class="text-body-sm text-ink truncate max-w-[60%]">${escapeHtml(word)}</span>
+          <span class="text-caption tabular-nums text-mute">${count}x (${pct}%)</span>
+        </div>`;
+      }).join('');
+    } else {
+      keywordList.innerHTML = '<p class="text-caption text-mute">Start typing to see keywords...</p>';
+    }
+
+    const letterCounts = new Map<string, number>();
+    let totalLetters = 0;
+    for (const c of text) {
+      if (/[\p{L}]/u.test(c)) {
+        letterCounts.set(c, (letterCounts.get(c) || 0) + 1);
+        totalLetters++;
+      }
+    }
+    const sortedLetters = [...letterCounts.entries()].sort((a, b) => b[1] - a[1]);
+    if (sortedLetters.length > 0) {
+      const maxCount = sortedLetters[0][1];
+      letterFreq.innerHTML = sortedLetters.map(([letter, count]) => {
+        const pct = (count / totalLetters) * 100;
+        const barWidth = (count / maxCount) * 100;
+        return `<div class="flex items-center gap-2 text-caption">
+          <span class="font-semibold text-ink w-4 text-center">${letter}</span>
+          <div class="w-16 h-2 bg-hairline rounded-full overflow-hidden">
+            <div class="h-full bg-link rounded-full transition-all" style="width: ${barWidth}%"></div>
+          </div>
+          <span class="tabular-nums text-mute">${count} (${pct.toFixed(1)}%)</span>
+        </div>`;
+      }).join('');
+    } else {
+      letterFreq.innerHTML = '<span class="text-caption text-mute">Start typing to see letter frequency...</span>';
+    }
+
+    const wordTarget = parseInt(goalWordTarget.value);
+    const charTarget = parseInt(goalCharTarget.value);
+    const wordPct = Math.min(100, (wordCount / wordTarget) * 100);
+    const charPct = Math.min(100, (chars / charTarget) * 100);
+    goalWordsCount.textContent = String(wordCount);
+    goalCharsCount.textContent = String(chars);
+    goalWordsBar.style.width = `${wordPct}%`;
+    goalCharsBar.style.width = `${charPct}%`;
+    if (wordPct >= 100) goalWordsBar.className = 'h-full bg-error rounded-full transition-all duration-300';
+    else goalWordsBar.className = 'h-full bg-cyan rounded-full transition-all duration-300';
+    if (charPct >= 100) goalCharsBar.className = 'h-full bg-error rounded-full transition-all duration-300';
+    else goalCharsBar.className = 'h-full bg-violet rounded-full transition-all duration-300';
+
+    function socialBar(limit: number, el: HTMLElement, bar: HTMLElement, name: string) {
+      el.textContent = `${chars} / ${limit}`;
+      const pct = Math.min(100, (chars / limit) * 100);
+      bar.style.width = `${pct}%`;
+      let status: string;
+      if (pct >= 100) { bar.style.backgroundColor = '#ee0000'; status = 'over limit'; }
+      else if (pct >= 90) { bar.style.backgroundColor = '#f5a623'; status = 'near limit'; }
+      else { bar.style.backgroundColor = '#50e3c2'; status = 'within limit'; }
+      bar.setAttribute('aria-label', `${name}: ${chars} of ${limit} characters, ${status}`);
+    }
+    socialBar(280, socialTwitter, socialTwitterBar, 'Twitter');
+    socialBar(160, socialGoogle, socialGoogleBar, 'Google Meta');
+    socialBar(2200, socialInstagram, socialInstagramBar, 'Instagram');
+    socialBar(2200, socialTiktok, socialTiktokBar, 'TikTok');
+    socialBar(5000, socialYoutube, socialYoutubeBar, 'YouTube');
+  }
+
+  function escapeHtml(str: string): string {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  textarea.addEventListener('input', update);
+
+  goalWordTarget.addEventListener('change', update);
+  goalCharTarget.addEventListener('change', update);
+
+  function showToast(msg: string) {
+    const toast = document.getElementById('toast')!;
+    toast.textContent = msg;
+    toast.classList.remove('opacity-0', 'translate-y-2');
+    toast.classList.add('opacity-100', 'translate-y-0');
+    setTimeout(() => {
+      toast.classList.remove('opacity-100', 'translate-y-0');
+      toast.classList.add('opacity-0', 'translate-y-2');
+    }, 2000);
+  }
+
+  document.getElementById('copy-btn')!.addEventListener('click', () => {
+    navigator.clipboard.writeText(textarea.value).then(() => showToast('Copied!')).catch(() => {});
+  });
+
+  document.getElementById('clear-btn')!.addEventListener('click', () => {
+    textarea.value = '';
+    update();
+    textarea.focus();
+  });
+
+  document.getElementById('download-btn')!.addEventListener('click', () => {
+    const blob = new Blob([textarea.value], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'wordcountergo-export.txt';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  document.querySelectorAll('.case-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const type = (btn as HTMLElement).dataset.case as CaseType;
+      const text = textarea.value;
+      if (!text) return;
+      const selectionStart = textarea.selectionStart;
+      const selectionEnd = textarea.selectionEnd;
+      const selectedText = text.substring(selectionStart, selectionEnd);
+      const targetText = selectedText || text;
+
+      let result: string;
+      switch (type) {
+        case 'sentence':
+          result = targetText.replace(/(^\s*\w|[.!?]\s*\w)/g, c => c.toUpperCase());
+          break;
+        case 'lower':
+          result = targetText.toLowerCase();
+          break;
+        case 'upper':
+          result = targetText.toUpperCase();
+          break;
+        case 'title':
+          result = targetText.replace(/\w\S*/g, w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
+          break;
+        case 'toggle':
+          result = [...targetText].map(c => c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase()).join('');
+          break;
+        default:
+          result = targetText;
+      }
+
+      if (selectedText) {
+        textarea.setRangeText(result, selectionStart, selectionEnd, 'end');
+      } else {
+        textarea.value = result;
+      }
+      update();
+    });
+  });
+
+  try {
+    const saved = localStorage.getItem('wordcountergo-text');
+    if (saved) { textarea.value = saved; update(); }
+  } catch {}
+
+  textarea.addEventListener('input', () => {
+    try { localStorage.setItem('wordcountergo-text', textarea.value); } catch {}
+  });
+
+  document.getElementById('replace-btn')!.addEventListener('click', () => {
+    const findInput = document.getElementById('find-input') as HTMLInputElement;
+    const replaceInput = document.getElementById('replace-input') as HTMLInputElement;
+    const find = findInput.value;
+    const replace = replaceInput.value;
+    if (!find) { showToast('Enter text to find'); return; }
+    try {
+      const escaped = find.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escaped, 'gi');
+      const result = textarea.value.replace(regex, replace);
+      if (result !== textarea.value) {
+        textarea.value = result;
+        update();
+        const count = (textarea.value.match(regex) || []).length;
+        showToast(`Replaced ${count} occurrence${count !== 1 ? 's' : ''}`);
+      } else {
+        showToast(`No matches found for "${find}"`);
+      }
+    } catch {}
+  });
+
+  function findEOCD(data: DataView): number {
+    const len = data.byteLength;
+    const searchStart = Math.max(0, len - 65557);
+    for (let i = len - 22; i >= searchStart; i--) {
+      if (data.getUint32(i, true) === 0x06054b50) return i;
+    }
+    return -1;
+  }
+
+  async function parseDocx(buffer: ArrayBuffer): Promise<string> {
+    const data = new DataView(buffer);
+    const eocdOffset = findEOCD(data);
+    if (eocdOffset === -1) throw new Error('Invalid DOCX (ZIP) file');
+
+    const cdOffset = data.getUint32(eocdOffset + 16, true);
+    const cdSize = data.getUint32(eocdOffset + 12, true);
+
+    let localOffset = -1;
+    let compSize = 0;
+    let method = 0;
+    let pos = cdOffset;
+    const cdEnd = cdOffset + cdSize;
+
+    while (pos < cdEnd) {
+      if (data.getUint32(pos, true) !== 0x02014b50) break;
+      const nameLen = data.getUint16(pos + 28, true);
+      const extraLen = data.getUint16(pos + 30, true);
+      const commentLen = data.getUint16(pos + 32, true);
+      const fileName = new TextDecoder().decode(new Uint8Array(buffer, pos + 46, nameLen));
+
+      if (fileName === 'word/document.xml') {
+        localOffset = data.getUint32(pos + 42, true);
+        compSize = data.getUint32(pos + 20, true);
+        method = data.getUint16(pos + 10, true);
+        break;
+      }
+      pos += 46 + nameLen + extraLen + commentLen;
+    }
+
+    if (localOffset === -1) throw new Error('word/document.xml not found in DOCX');
+    if (data.getUint32(localOffset, true) !== 0x04034b50) throw new Error('Invalid local file header');
+
+    const lNameLen = data.getUint16(localOffset + 26, true);
+    const lExtraLen = data.getUint16(localOffset + 28, true);
+    const dataStart = localOffset + 30 + lNameLen + lExtraLen;
+
+    let xmlBuffer: ArrayBuffer;
+    if (method === 0) {
+      xmlBuffer = buffer.slice(dataStart, dataStart + compSize);
+    } else if (method === 8) {
+      const compressed = new Uint8Array(buffer, dataStart, compSize);
+      const ds = new DecompressionStream('deflate-raw');
+      const blob = new Blob([compressed]);
+      const stream = blob.stream().pipeThrough(ds);
+      xmlBuffer = await new Response(stream).arrayBuffer();
+    } else {
+      throw new Error(`Unsupported compression method: ${method}`);
+    }
+
+    const xmlText = new TextDecoder().decode(xmlBuffer);
+    const cleaned = xmlText.replace(/<w:/g, '<').replace(/<\/w:/g, '</');
+    const doc = new DOMParser().parseFromString(cleaned, 'text/xml');
+
+    const paragraphs = doc.querySelectorAll('p');
+    const results: string[] = [];
+    for (const p of paragraphs) {
+      const tElements = p.querySelectorAll('t');
+      const text = Array.from(tElements).map(t => t.textContent || '').join('');
+      results.push(text);
+    }
+    return results.join('\n');
+  }
+
+  function unescapePdfString(s: string): string {
+    return s.replace(/\\([nrt\\()])/g, (_, c: string) => {
+      if (c === 'n') return '\n';
+      if (c === 'r') return '\r';
+      if (c === 't') return '\t';
+      return c;
+    });
+  }
+
+  function extractPdfText(content: string): string[] {
+    const results: string[] = [];
+    const textPat = /\(((?:[^()\\]|\\.)*)\)/g;
+    let match: RegExpExecArray | null;
+
+    const tjRegex = /\(((?:[^()\\]|\\.)*)\)\s*Tj/g;
+    while ((match = tjRegex.exec(content)) !== null) {
+      results.push(unescapePdfString(match[1]));
+    }
+
+    const tjArrayRegex = /\[((?:[^\[\]\\]|\\.)*)\]\s*TJ/g;
+    while ((match = tjArrayRegex.exec(content)) !== null) {
+      const parenParts = match[1].match(textPat);
+      if (parenParts) {
+        for (const p of parenParts) {
+          results.push(unescapePdfString(p.slice(1, -1)));
+        }
+      }
+    }
+
+    const quoteRegex = /\(((?:[^()\\]|\\.)*)\)\s*'/g;
+    while ((match = quoteRegex.exec(content)) !== null) {
+      results.push(unescapePdfString(match[1]));
+    }
+
+    return results;
+  }
+
+  async function parsePdf(buffer: ArrayBuffer): Promise<string> {
+    const data = new Uint8Array(buffer);
+    const textDecoder = new TextDecoder('latin-1');
+    const text = textDecoder.decode(data);
+
+    const allText: string[] = [];
+    let searchPos = 0;
+
+      while (searchPos < text.length) {
+        const streamMatch = text.slice(searchPos).match(/stream[ \t]*[\r\n]+/);
+        if (!streamMatch) break;
+
+        const streamPos = searchPos + streamMatch.index!;
+        const dataStart = streamPos + streamMatch[0].length;
+
+        const preStream = text.slice(Math.max(0, streamPos - 300), streamPos);
+        const isFlate = /\/Filter\s*\/FlateDecode/.test(preStream) || /\/Filter\s*\[\s*\/FlateDecode\s*\]/.test(preStream);
+
+        const afterStream = text.slice(dataStart);
+        let endIdx = afterStream.search(/[\r\n]+\s*endstream/);
+        let matchLen = 0;
+        if (endIdx === -1) {
+          endIdx = afterStream.indexOf('endstream');
+          matchLen = 9;
+        } else {
+          matchLen = afterStream.slice(endIdx).match(/[\r\n]+\s*endstream/)![0].length;
+        }
+        if (endIdx === -1) break;
+
+        const endstreamPos = dataStart + endIdx;
+        let dataEnd = endstreamPos;
+        while (dataEnd > dataStart && (text[dataEnd - 1] === ' ' || text[dataEnd - 1] === '\t')) {
+          dataEnd--;
+        }
+
+        try {
+          if (isFlate) {
+            const rawData = data.slice(dataStart, dataEnd);
+            let decoded: ArrayBuffer;
+            try {
+              const ds = new DecompressionStream('deflate');
+              const stream = new Blob([rawData]).stream().pipeThrough(ds);
+              decoded = await new Response(stream).arrayBuffer();
+            } catch {
+              const ds = new DecompressionStream('deflate-raw');
+              const stream = new Blob([rawData]).stream().pipeThrough(ds);
+              decoded = await new Response(stream).arrayBuffer();
+            }
+            allText.push(...extractPdfText(textDecoder.decode(decoded)));
+          } else {
+            allText.push(...extractPdfText(text.slice(dataStart, dataEnd)));
+          }
+        } catch {}
+
+        searchPos = dataStart + endIdx + matchLen;
+      }
+
+    const btRegex = /BT[\s\S]*?ET/g;
+    let btMatch: RegExpExecArray | null;
+    while ((btMatch = btRegex.exec(text)) !== null) {
+      allText.push(...extractPdfText(btMatch[0]));
+    }
+
+    return allText.filter(t => t.trim()).join('\n');
+  }
+
+  async function handleFile(file: File): Promise<void> {
+    const ext = file.name.split('.').pop()?.toLowerCase();
+    try {
+      if (ext === 'txt') {
+        textarea.value = await file.text();
+      } else if (ext === 'docx') {
+        const buffer = await file.arrayBuffer();
+        textarea.value = await parseDocx(buffer);
+      } else if (ext === 'doc') {
+        showToast('.doc files are not supported. Try saving as .docx');
+        return;
+      } else if (ext === 'pdf') {
+        const buffer = await file.arrayBuffer();
+        textarea.value = await parsePdf(buffer);
+      } else {
+        showToast('Unsupported format. Use .txt, .docx, or .pdf');
+        return;
+      }
+      update();
+      showToast(`Loaded ${file.name}`);
+    } catch (e) {
+      showToast(`Could not read ${file.name}`);
+    }
+  }
+
+  const fileInput = document.getElementById('file-input') as HTMLInputElement;
+  document.getElementById('upload-btn')!.addEventListener('click', () => fileInput.click());
+
+  fileInput.addEventListener('change', async () => {
+    const file = fileInput.files?.[0];
+    if (!file) return;
+    await handleFile(file);
+    fileInput.value = '';
+  });
+
+  const card = document.getElementById('word-counter-card')!;
+  const dropZone = document.getElementById('drop-zone')!;
+  let dragCounter = 0;
+
+  function showDropZone(show: boolean) {
+    dropZone.classList.toggle('opacity-0', !show);
+    dropZone.classList.toggle('pointer-events-none', !show);
+  }
+
+  card.addEventListener('dragenter', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dragCounter++;
+    showDropZone(true);
+  });
+
+  card.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  });
+
+  card.addEventListener('dragleave', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dragCounter--;
+    if (dragCounter <= 0) { dragCounter = 0; showDropZone(false); }
+  });
+
+  card.addEventListener('drop', async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dragCounter = 0;
+    showDropZone(false);
+    const file = e.dataTransfer?.files?.[0];
+    if (file) await handleFile(file);
+  });
+
+  update();
+</script>

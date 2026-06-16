@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<BaseLayout
+  title="How to Count Words — Complete Guide | wordcountergo.com"
+  description="Learn how to count words in any text. A complete guide covering word counting methods, character counts, readability, and best practices for writers."
+>
+  <Header />
+
+  <main id="main-content" aria-label="Main content">
+    <article class="mx-auto max-w-[900px] px-4 sm:px-6 pt-16 sm:pt-24 pb-16 sm:pb-32">
+      <div class="text-center mb-16">
+        <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-canvas-soft text-caption text-body font-mono uppercase tracking-wider mb-4 border border-hairline" data-i18n="guide.badge">
+          Guide
+        </span>
+        <h1 class="text-display-xl max-sm:text-[28px] max-sm:leading-[34px] sm:text-[56px] sm:leading-[56px] font-semibold tracking-[-2.4px] text-ink" data-i18n="guide.title">
+          How to Count Words.
+        </h1>
+        <p class="mt-3 text-body-lg text-body max-w-lg mx-auto" data-i18n="guide.subtitle">
+          A complete guide to counting words, characters, and improving your writing with data. Try our <a href="/" class="text-link hover:text-link-deep transition-colors">free word counter</a>.
+        </p>
+        <p class="mt-4 text-caption text-mute">
+          <time datetime="2025-01-15" data-i18n="guide.updated">Last updated: January 15, 2025</time>
+        </p>
+      </div>
+
+      <div class="prose-custom space-y-8">
+        <section>
+          <h2 class="text-display-md max-sm:text-display-sm font-semibold tracking-[-0.96px] text-ink mt-0" data-i18n="guide.what-is.title">What is word counting?</h2>
+          <p class="text-body-md text-body leading-relaxed" data-i18n="guide.what-is.text">
+            Word counting is the process of determining the number of words in a document or passage. It's one of the most fundamental metrics in writing, used everywhere from academic essays to SEO content creation. A word counter automatically calculates this for you, along with related metrics like character count, sentence count, and reading time.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-display-md max-sm:text-display-sm font-semibold tracking-[-0.96px] text-ink" data-i18n="guide.why.title">Why word count matters</h2>
+          <div class="grid sm:grid-cols-2 gap-4 mt-4">
+            <div class="bg-canvas rounded-lg p-5 shadow-level-2">
+              <h3 class="text-body-md-strong text-ink" data-i18n="guide.why.academic.title">Academic writing</h3>
+              <p class="text-body-sm text-body mt-1" data-i18n="guide.why.academic.desc">Essays, dissertations, and assignments often have strict word limits. Going over can mean penalties; going under can mean insufficient depth.</p>
+            </div>
+            <div class="bg-canvas rounded-lg p-5 shadow-level-2">
+              <h3 class="text-body-md-strong text-ink" data-i18n="guide.why.seo.title">SEO & content</h3>
+              <p class="text-body-sm text-body mt-1" data-i18n="guide.why.seo.desc">Search engines tend to favor comprehensive content. Blog posts around 1500-2500 words often perform better in search results.</p>
+            </div>
+            <div class="bg-canvas rounded-lg p-5 shadow-level-2">
+              <h3 class="text-body-md-strong text-ink" data-i18n="guide.why.social.title">Social media</h3>
+              <p class="text-body-sm text-body mt-1" data-i18n="guide.why.social.desc">Twitter has a 280-character limit. Instagram allows up to 2200 characters. Staying within limits is crucial for sharing.</p>
+            </div>
+            <div class="bg-canvas rounded-lg p-5 shadow-level-2">
+              <h3 class="text-body-md-strong text-ink" data-i18n="guide.why.professional.title">Professional writing</h3>
+              <p class="text-body-sm text-body mt-1" data-i18n="guide.why.professional.desc">Reports, proposals, and emails benefit from concise writing. Word count helps you stay on track and respect your reader's time.</p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="text-display-md max-sm:text-display-sm font-semibold tracking-[-0.96px] text-ink" data-i18n="guide.how.title">How our word counter works</h2>
+          <p class="text-body-md text-body leading-relaxed" data-i18n="guide.how.text">
+            wordcountergo.com uses the browser's built-in <strong>Intl.Segmenter</strong> API for accurate word boundary detection across all languages. This means:
+          </p>
+          <ul class="text-body-md text-body space-y-2 mt-3 list-disc pl-5">
+            <li data-i18n="guide.how.li1">Words are identified using Unicode rules — not simple space splitting</li>
+            <li data-i18n="guide.how.li2">Chinese, Japanese, and Korean text is segmented correctly</li>
+            <li data-i18n="guide.how.li3">Arabic and Hebrew (right-to-left) are fully supported</li>
+            <li data-i18n="guide.how.li4">Accented characters and special scripts (Cyrillic, Devanagari, etc.) are handled</li>
+            <li data-i18n="guide.how.li5">Hyphenated words and contractions count as single words</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-display-md max-sm:text-display-sm font-semibold tracking-[-0.96px] text-ink" data-i18n="guide.metrics.title">Key metrics explained</h2>
+          <div class="overflow-x-auto">
+            <table class="w-full text-body-sm text-body border-collapse mt-4">
+              <thead>
+                <tr class="bg-canvas-soft-2">
+                  <th scope="col" class="text-start p-3 max-sm:p-2 font-medium text-ink border-b border-hairline" data-i18n="guide.metrics.metric">Metric</th>
+                  <th scope="col" class="text-start p-3 max-sm:p-2 font-medium text-ink border-b border-hairline" data-i18n="guide.metrics.what">What it measures</th>
+                  <th scope="col" class="text-start p-3 max-sm:p-2 font-medium text-ink border-b border-hairline" data-i18n="guide.metrics.use">Typical use</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b border-hairline"><td class="p-3 max-sm:p-2 font-medium text-ink" data-i18n="guide.metrics.words">Words</td><td class="p-3 max-sm:p-2" data-i18n="guide.metrics.words.desc">Total distinct word units</td><td class="p-3 max-sm:p-2" data-i18n="guide.metrics.words.use">Primary metric for most writing</td></tr>
+                <tr class="border-b border-hairline"><td class="p-3 max-sm:p-2 font-medium text-ink" data-i18n="guide.metrics.chars">Characters</td><td class="p-3 max-sm:p-2" data-i18n="guide.metrics.chars.desc">Total characters including spaces</td><td class="p-3 max-sm:p-2" data-i18n="guide.metrics.chars.use">Social media, SMS, meta descriptions</td></tr>
+                <tr class="border-b border-hairline"><td class="p-3 max-sm:p-2 font-medium text-ink" data-i18n="guide.metrics.nospaces">Characters (no spaces)</td><td class="p-3 max-sm:p-2" data-i18n="guide.metrics.nospaces.desc">Characters excluding whitespace</td><td class="p-3 max-sm:p-2" data-i18n="guide.metrics.nospaces.use">Code, data entry</td></tr>
+                <tr class="border-b border-hairline"><td class="p-3 max-sm:p-2 font-medium text-ink" data-i18n="guide.metrics.sentences">Sentences</td><td class="p-3 max-sm:p-2" data-i18n="guide.metrics.sentences.desc">Complete sentence units</td><td class="p-3 max-sm:p-2" data-i18n="guide.metrics.sentences.use">Readability analysis</td></tr>
+                <tr class="border-b border-hairline"><td class="p-3 max-sm:p-2 font-medium text-ink" data-i18n="guide.metrics.paragraphs">Paragraphs</td><td class="p-3 max-sm:p-2" data-i18n="guide.metrics.paragraphs.desc">Blocks of text separated by blank lines</td><td class="p-3 max-sm:p-2" data-i18n="guide.metrics.paragraphs.use">Content structure analysis</td></tr>
+                <tr class="border-b border-hairline"><td class="p-3 max-sm:p-2 font-medium text-ink" data-i18n="guide.metrics.pages">Pages</td><td class="p-3 max-sm:p-2" data-i18n="guide.metrics.pages.desc">Estimated printed pages (250 words/page)</td><td class="p-3 max-sm:p-2" data-i18n="guide.metrics.pages.use">Academic submissions</td></tr>
+                <tr class="border-b border-hairline"><td class="p-3 max-sm:p-2 font-medium text-ink" data-i18n="guide.metrics.unique">Unique words</td><td class="p-3 max-sm:p-2" data-i18n="guide.metrics.unique.desc">Distinct words used (case-insensitive)</td><td class="p-3 max-sm:p-2" data-i18n="guide.metrics.unique.use">Vocabulary diversity</td></tr>
+                <tr class="border-b border-hairline"><td class="p-3 max-sm:p-2 font-medium text-ink" data-i18n="guide.metrics.reading">Reading time</td><td class="p-3 max-sm:p-2" data-i18n="guide.metrics.reading.desc">Estimated time to read (200 WPM)</td><td class="p-3 max-sm:p-2" data-i18n="guide.metrics.reading.use">Blog posts, articles</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="text-display-md max-sm:text-display-sm font-semibold tracking-[-0.96px] text-ink" data-i18n="guide.tips.title">Word counting tips</h2>
+          <ul class="text-body-md text-body space-y-2 mt-3 list-disc pl-5">
+            <li data-i18n="guide.tips.li1"><strong>Set a goal.</strong> Use the word/character goal feature to track progress as you write.</li>
+            <li data-i18n="guide.tips.li2"><strong>Check keyword density.</strong> Overusing the same word can hurt readability and SEO.</li>
+            <li data-i18n="guide.tips.li3"><strong>Monitor readability.</strong> Aim for a Flesch Reading Ease score of 60-70 for general audiences.</li>
+            <li data-i18n="guide.tips.li4"><strong>Use case conversion.</strong> If you've pasted text with inconsistent capitalization, use the case converter.</li>
+            <li data-i18n="guide.tips.li5"><strong>Save your work.</strong> Our tool auto-saves your text locally so you won't lose it on refresh.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-display-md max-sm:text-display-sm font-semibold tracking-[-0.96px] text-ink" data-i18n="guide.resources.title">Related resources</h2>
+          <ul class="text-body-md text-body space-y-2 mt-3 list-disc pl-5">
+            <li data-i18n="guide.resources.li1"><a href="/" class="text-link hover:text-link-deep transition-colors">Free online word counter</a> — count words in real time</li>
+            <li data-i18n="guide.resources.li2"><a href="/faq" class="text-link hover:text-link-deep transition-colors">Word counter FAQ</a> — answers to common questions</li>
+          </ul>
+        </section>
+      </div>
+    </article>
+  </main>
+
+  <Footer />
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "How to Count Words — Complete Guide",
+    "description": "Learn how to count words in any text. A complete guide covering word counting methods, character counts, readability, and best practices.",
+    "author": { "@type": "Organization", "name": "wordcountergo.com" },
+    "publisher": { "@type": "Organization", "name": "wordcountergo.com" },
+    "dateModified": "2025-01-15"
+  })} />
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wordcountergo.com" },
+      { "@type": "ListItem", "position": 2, "name": "How to Count Words", "item": "https://wordcountergo.com/how-to-count-words" }
+    ]
+  })} />
+</BaseLayout>

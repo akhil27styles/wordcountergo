@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout
+  title="FAQ — Word Counter Frequently Asked Questions | wordcountergo.com"
+  description="Frequently asked questions about word counting. Learn how word count is calculated, what characters count, and more."
+>
+  <Header />
+
+  <main id="main-content" aria-label="Main content">
+    <section class="mx-auto max-w-[900px] px-4 sm:px-6 pt-16 sm:pt-24 pb-16 sm:pb-32">
+      <div class="text-center mb-16">
+        <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-canvas-soft text-caption text-body font-mono uppercase tracking-wider mb-4 border border-hairline" data-i18n="faq.badge">
+          FAQ
+        </span>
+        <h1 class="text-display-xl max-sm:text-[28px] max-sm:leading-[34px] sm:text-[56px] sm:leading-[56px] font-semibold tracking-[-2.4px] text-ink" data-i18n="faq.title">
+          Frequently Asked Questions.
+        </h1>
+        <p class="mt-3 text-body-lg text-body max-w-lg mx-auto" data-i18n="faq.subtitle">
+          Everything you need to know about counting words with wordcountergo.com. Use our <a href="/" class="text-link hover:text-link-deep transition-colors">free word counter</a> to start counting.
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        <article class="bg-canvas rounded-lg p-6 shadow-level-3">
+          <h2 class="text-display-sm font-semibold tracking-[-0.6px] text-ink" data-i18n="faq.q1">How do you count words?</h2>
+          <p class="mt-3 text-body-md text-body" data-i18n="faq.a1">Words are counted using Unicode word boundary detection via the ECMAScript <code class="text-code font-mono bg-canvas-soft-2 px-1.5 py-0.5 rounded">Intl.Segmenter</code> API. This correctly handles all languages including English, Chinese, Arabic, Hindi, Japanese, and more. A "word" is any sequence of letters, digits, or apostrophes separated by whitespace or punctuation.</p>
+        </article>
+
+        <article class="bg-canvas rounded-lg p-6 shadow-level-3">
+          <h2 class="text-display-sm font-semibold tracking-[-0.6px] text-ink" data-i18n="faq.q2">Is my text stored on your servers?</h2>
+          <p class="mt-3 text-body-md text-body" data-i18n="faq.a2">No. Your text is processed entirely in your browser. Nothing is sent to any server. If you refresh the page, your text is restored from <code class="text-code font-mono bg-canvas-soft-2 px-1.5 py-0.5 rounded">localStorage</code> on your device for your convenience.</p>
+        </article>
+
+        <article class="bg-canvas rounded-lg p-6 shadow-level-3">
+          <h2 class="text-display-sm font-semibold tracking-[-0.6px] text-ink" data-i18n="faq.q3">Does it work with languages other than English?</h2>
+          <p class="mt-3 text-body-md text-body" data-i18n="faq.a3">Yes. The tool uses Unicode-aware word segmentation that works with all languages — Spanish, French, German, Chinese, Japanese, Korean, Arabic, Hindi, Russian, and more. Character counting works for any script including CJK and right-to-left languages.</p>
+        </article>
+
+        <article class="bg-canvas rounded-lg p-6 shadow-level-3">
+          <h2 class="text-display-sm font-semibold tracking-[-0.6px] text-ink" data-i18n="faq.q4">How are pages calculated?</h2>
+          <p class="mt-3 text-body-md text-body" data-i18n="faq.a4">Pages are calculated based on the standard of approximately 250 words per page (single-spaced). This is the most common convention for academic and professional writing.</p>
+        </article>
+
+        <article class="bg-canvas rounded-lg p-6 shadow-level-3">
+          <h2 class="text-display-sm font-semibold tracking-[-0.6px] text-ink" data-i18n="faq.q5">What are readability scores?</h2>
+          <p class="mt-3 text-body-md text-body" data-i18n="faq.a5">Readability scores estimate how easy your text is to read. We show three: <strong>Flesch Reading Ease</strong> (higher = easier, 60-70 is good), <strong>Flesch-Kincaid Grade Level</strong> (US grade level), and <strong>Gunning Fog Index</strong> (years of education needed). These are designed for English text.</p>
+        </article>
+
+        <article class="bg-canvas rounded-lg p-6 shadow-level-3">
+          <h2 class="text-display-sm font-semibold tracking-[-0.6px] text-ink" data-i18n="faq.q6">How is reading time calculated?</h2>
+          <p class="mt-3 text-body-md text-body" data-i18n="faq.a6">Reading time uses the average reading speed of 200 words per minute. Speaking time uses 130 words per minute. These are standard estimates used across the web.</p>
+        </article>
+
+        <article class="bg-canvas rounded-lg p-6 shadow-level-3">
+          <h2 class="text-display-sm font-semibold tracking-[-0.6px] text-ink" data-i18n="faq.q7">Is there a word limit?</h2>
+          <p class="mt-3 text-body-md text-body" data-i18n="faq.a7">No. You can paste or type as much text as you want. The tool handles large documents without any issues.</p>
+        </article>
+
+        <article class="bg-canvas rounded-lg p-6 shadow-level-3">
+          <h2 class="text-display-sm font-semibold tracking-[-0.6px] text-ink" data-i18n="faq.q8">Is wordcountergo.com free?</h2>
+          <p class="mt-3 text-body-md text-body" data-i18n="faq.a8">Yes. The tool is completely free with no ads, no sign-ups, and no hidden limits. No account required.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How do you count words?", "acceptedAnswer": { "@type": "Answer", "text": "Words are counted using Unicode word boundary detection via the Intl.Segmenter API, supporting all languages." } },
+      { "@type": "Question", "name": "Is my text stored on your servers?", "acceptedAnswer": { "@type": "Answer", "text": "No. Your text is processed entirely in your browser. Nothing is sent to any server." } },
+      { "@type": "Question", "name": "Does it work with languages other than English?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The tool uses Unicode-aware word segmentation that works with all languages." } },
+      { "@type": "Question", "name": "How are pages calculated?", "acceptedAnswer": { "@type": "Answer", "text": "Pages are calculated based on approximately 250 words per page single-spaced." } },
+      { "@type": "Question", "name": "What are readability scores?", "acceptedAnswer": { "@type": "Answer", "text": "Readability scores estimate how easy your text is to read using Flesch Reading Ease, Flesch-Kincaid Grade Level, and Gunning Fog Index." } },
+      { "@type": "Question", "name": "How is reading time calculated?", "acceptedAnswer": { "@type": "Answer", "text": "Reading time uses 200 words per minute. Speaking time uses 130 words per minute." } },
+      { "@type": "Question", "name": "Is there a word limit?", "acceptedAnswer": { "@type": "Answer", "text": "No. You can paste or type as much text as you want." } },
+      { "@type": "Question", "name": "Is wordcountergo.com free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The tool is completely free with no ads, no sign-ups, and no hidden limits." } }
+    ]
+  })} />
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wordcountergo.com" },
+      { "@type": "ListItem", "position": 2, "name": "FAQ", "item": "https://wordcountergo.com/faq" }
+    ]
+  })} />
+</BaseLayout>

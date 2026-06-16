@@ -1,11 +1,311 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WordCounter from '../components/word-counter/WordCounter.astro';
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout
+  title="Word Counter — Free Online Word & Character Counter | wordcountergo.com"
+  description="Free word counter tool. Count words, characters, sentences, paragraphs, and pages online in real time. Supports all languages. No sign-up, no limits, 100% private."
+  keywords="word counter, free word counter, online word counter, word counter tool, word counter free, word counter online free, essay word counter, pdf word counter, website word counter, quillbot word counter, grammarly word counter, word counter google docs, word counter online, character counter, word count, count words"
+>
+  <Header />
+
+  <main id="main-content" aria-label="Main content">
+    <section class="bg-canvas">
+      <div class="mx-auto max-w-[1400px] px-4 sm:px-6 pt-16 sm:pt-24 pb-8 sm:pb-12 text-center">
+        <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-canvas-soft text-caption text-body font-mono uppercase tracking-wider mb-4 border border-hairline" data-i18n="hero.badge">
+          Free Online Tool
+        </span>
+        <h1 class="text-display-xl max-sm:text-[36px] max-sm:leading-[40px] sm:text-[56px] sm:leading-[56px] font-semibold tracking-[-2.4px] text-ink max-w-3xl mx-auto" data-i18n="hero.title">
+          Word Counter.
+        </h1>
+        <p class="mt-3 text-body-lg text-body max-w-xl mx-auto" data-i18n="hero.subtitle">
+          Count words, characters, sentences, and more in real time. Works with any language. Free and private.
+        </p>
+        <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a href="#word-counter" class="inline-flex items-center justify-center h-12 sm:h-10 px-6 sm:px-5 rounded-full bg-link text-white text-body-sm font-medium hover:bg-link-deep transition-colors no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-link w-full sm:w-auto" data-i18n="hero.cta.start">
+            Start Counting
+          </a>
+          <a href="/how-to-count-words" class="inline-flex items-center justify-center h-12 sm:h-10 px-6 sm:px-5 rounded-full bg-canvas border border-hairline text-body text-body-sm font-medium hover:bg-canvas-soft-2 transition-colors no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-link w-full sm:w-auto" data-i18n="hero.cta.learn">
+            Learn More
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="word-counter" class="pb-24 sm:pb-32 -mt-4 scroll-mt-20">
+      <div class="mx-auto max-w-[1400px] px-4 sm:px-6">
+        <WordCounter />
+      </div>
+    </section>
+
+    <section class="py-12 sm:py-24 bg-canvas">
+      <div class="mx-auto max-w-[900px] px-4 sm:px-6">
+        <div class="space-y-6">
+          <h2 class="text-display-lg max-sm:text-display-md font-semibold tracking-[-1.28px] text-ink text-center" data-i18n="section.what-is.title">What is a word counter?</h2>
+          <p class="text-body-md text-body leading-relaxed" data-i18n="section.what-is.p1">
+            A word counter is a tool that automatically counts the number of words, characters, sentences, and paragraphs in a given text. Writers, students, SEO professionals, and content creators use word counters to ensure their content meets specific length requirements, whether for academic submissions, blog posts, social media updates, or professional documents.
+          </p>
+          <p class="text-body-md text-body leading-relaxed" data-i18n="section.what-is.p2">
+            Unlike simple word counters that only show a word count, <a href="/" class="text-link hover:text-link-deep transition-colors">wordcountergo.com</a> provides a comprehensive suite of writing analytics including <a href="/" class="text-link hover:text-link-deep transition-colors">readability scores</a>, <a href="/" class="text-link hover:text-link-deep transition-colors">keyword density analysis</a>, letter frequency distribution, and social media limit checks — all in real time as you type.
+          </p>
+          <p class="text-body-md text-body leading-relaxed" data-i18n="section.what-is.p3">
+            Our tool supports all languages including English, Spanish, French, Chinese, Arabic, Hindi, Japanese, and more. Because everything runs in your browser, your text never leaves your device — making it the most <a href="/faq" class="text-link hover:text-link-deep transition-colors">private word counter</a> available online.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-canvas-soft py-16 sm:py-32">
+      <div class="mx-auto max-w-[1400px] px-4 sm:px-6">
+        <div class="text-center mb-16">
+          <span class="text-caption-mono font-mono uppercase tracking-wider text-mute" data-i18n="section.features.badge">Features</span>
+          <h2 class="mt-2 text-display-lg max-sm:text-display-md font-semibold tracking-[-1.28px] text-ink" data-i18n="section.features.title">
+            Everything you need.
+          </h2>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <article class="bg-canvas rounded-lg p-6 shadow-level-3">
+            <h3 class="text-display-sm font-semibold tracking-[-0.6px] text-ink" data-i18n="section.feature.realtime.title">Real-time counting</h3>
+            <p class="mt-2 text-body-sm text-body" data-i18n="section.feature.realtime.desc">Words, characters, sentences, paragraphs, lines, pages — updated as you type.</p>
+          </article>
+          <article class="bg-canvas rounded-lg p-6 shadow-level-3">
+            <h3 class="text-display-sm font-semibold tracking-[-0.6px] text-ink" data-i18n="section.feature.multilang.title">Multi-language support</h3>
+            <p class="mt-2 text-body-sm text-body" data-i18n="section.feature.multilang.desc">Works with English, Spanish, French, Chinese, Arabic, Hindi, Japanese, and more.</p>
+          </article>
+          <article class="bg-canvas rounded-lg p-6 shadow-level-3">
+            <h3 class="text-display-sm font-semibold tracking-[-0.6px] text-ink" data-i18n="section.feature.keywords.title">Keyword density</h3>
+            <p class="mt-2 text-body-sm text-body" data-i18n="section.feature.keywords.desc">See your most used keywords with frequency and percentage breakdown.</p>
+          </article>
+          <article class="bg-canvas rounded-lg p-6 shadow-level-3">
+            <h3 class="text-display-sm font-semibold tracking-[-0.6px] text-ink" data-i18n="section.feature.social.title">Social media limits</h3>
+            <p class="mt-2 text-body-sm text-body" data-i18n="section.feature.social.desc">Check your text length against Twitter, Instagram, TikTok, YouTube limits.</p>
+          </article>
+          <article class="bg-canvas rounded-lg p-6 shadow-level-3">
+            <h3 class="text-display-sm font-semibold tracking-[-0.6px] text-ink" data-i18n="section.feature.readability.title">Readability scores</h3>
+            <p class="mt-2 text-body-sm text-body" data-i18n="section.feature.readability.desc">Flesch Reading Ease, Flesch-Kincaid Grade Level, and Gunning Fog Index.</p>
+          </article>
+          <article class="bg-canvas rounded-lg p-6 shadow-level-3">
+            <h3 class="text-display-sm font-semibold tracking-[-0.6px] text-ink" data-i18n="section.feature.privacy.title">100% private</h3>
+            <p class="mt-2 text-body-sm text-body" data-i18n="section.feature.privacy.desc">Your text never leaves your browser. No servers, no tracking, no sign-up.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 sm:py-32 bg-canvas-soft">
+      <div class="mx-auto max-w-[900px] px-4 sm:px-6">
+        <div class="space-y-10">
+          <div class="space-y-6">
+            <h2 class="text-display-lg max-sm:text-display-md font-semibold tracking-[-1.28px] text-ink text-center">Why Use an Online Word Counter?</h2>
+            <p class="text-body-md text-body leading-relaxed">Whether you are a student working on an <strong>essay word counter</strong>, a professional writer checking your article length, or an SEO specialist optimizing meta descriptions, having a reliable <strong>online word counter</strong> is essential. Our <strong>free word counter</strong> provides instant word and character counts as you type, with no page refreshes or button clicks needed.</p>
+            <p class="text-body-md text-body leading-relaxed">Unlike other <strong>word counter tools</strong> that require sign-ups or have hidden limits, wordcountergo.com is completely free with no account required. You get accurate <strong>word count</strong> and <strong>character count</strong> statistics powered by the <code class="text-code font-mono bg-canvas-soft-2 px-1.5 py-0.5 rounded">Intl.Segmenter</code> API for reliable Unicode word segmentation across all languages.</p>
+            <p class="text-body-md text-body leading-relaxed">Need a <strong>word counter for Google Docs</strong> or Microsoft Word? Paste your document directly into our tool to get a detailed breakdown including <strong>sentence counter</strong>, <strong>paragraph counter</strong>, and <strong>letter counter</strong> statistics. Our <strong>word counter free</strong> service also provides <strong>readability scores</strong> — Flesch Reading Ease, Flesch-Kincaid Grade Level, and Gunning Fog Index — to help you assess how accessible your writing is to your audience.</p>
+          </div>
+
+          <div class="space-y-6">
+            <h2 class="text-display-lg max-sm:text-display-md font-semibold tracking-[-1.28px] text-ink text-center">Who Uses a Word Counter Tool?</h2>
+            <div class="grid sm:grid-cols-2 gap-6">
+              <div class="bg-canvas rounded-lg p-5 border border-hairline">
+                <h3 class="text-display-sm font-semibold tracking-[-0.6px] text-ink">Students &amp; Academics</h3>
+                <p class="mt-2 text-body-sm text-body">Students use an <strong>essay word counter</strong> to meet assignment requirements — from 500-word essays to 1000-word college application essays. Our <strong>word counter for college essays</strong> helps you stay within the Common App word limit while tracking characters and paragraphs. Check <strong>how many words in my essay</strong> instantly without extra software.</p>
+              </div>
+              <div class="bg-canvas rounded-lg p-5 border border-hairline">
+                <h3 class="text-display-sm font-semibold tracking-[-0.6px] text-ink">SEO &amp; Content Writers</h3>
+                <p class="mt-2 text-body-sm text-body">SEO professionals rely on a <strong>word counter online free</strong> to optimize content length. Use our <strong>website word counter</strong> to analyze blog posts, check <strong>meta description character counter</strong> limits (160 characters for Google), and track <strong>keyword density</strong> to avoid over-optimization. Our <strong>count words online</strong> tool provides per-keyword frequency percentages.</p>
+              </div>
+              <div class="bg-canvas rounded-lg p-5 border border-hairline">
+                <h3 class="text-display-sm font-semibold tracking-[-0.6px] text-ink">Social Media Managers</h3>
+                <p class="mt-2 text-body-sm text-body">Each platform has strict length limits. Use our <strong>word counter for Twitter</strong> (280 chars), <strong>Instagram caption character counter</strong> (2,200 chars), or <strong>LinkedIn post character counter</strong> (3,000 chars) to avoid truncation. Check <strong>how many characters in my text</strong> before posting. Supports <strong>Twitter character counter</strong>, <strong>Instagram bio character counter</strong>, <strong>YouTube title character counter</strong>, <strong>TikTok bio character counter</strong>, and <strong>Reddit title character counter</strong>.</p>
+              </div>
+              <div class="bg-canvas rounded-lg p-5 border border-hairline">
+                <h3 class="text-display-sm font-semibold tracking-[-0.6px] text-ink">Writers &amp; Editors</h3>
+                <p class="mt-2 text-body-sm text-body">Professional writers use a <strong>word count tool</strong> to track progress and meet editorial guidelines. Our <strong>text word counter</strong> provides real-time <strong>word count checker</strong> functionality with <strong>reading time</strong> and <strong>speaking time</strong> estimates. <strong>Count words and characters online</strong> with a tool that requires <strong>no login</strong> and works entirely offline after loading.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-6">
+            <h2 class="text-display-lg max-sm:text-display-md font-semibold tracking-[-1.28px] text-ink text-center">Word Counter for Every Language</h2>
+            <p class="text-body-md text-body leading-relaxed">Our <strong>word counter online</strong> tool supports all languages including English, Spanish, French, German, Chinese, Japanese, Arabic, and more. We offer a dedicated <strong>hindi word counter</strong> and Urdu word counter with full Unicode support. Unlike alternatives like <strong>Quillbot word counter</strong> or <strong>Grammarly word counter</strong>, we never send your text to a server — everything stays in your browser for complete privacy.</p>
+            <p class="text-body-md text-body leading-relaxed">The <strong>online word counter</strong> interface is available in 8 languages with instant switching. Whether you need a <strong>word counter for Google Docs</strong> integration or a standalone <strong>free word counter</strong> for quick checks, our <strong>word counter tool</strong> handles everything from <strong>how to count words online</strong> to detailed <strong>online character count tool</strong> analysis.</p>
+            <p class="text-body-md text-body leading-relaxed">Need to analyze a document? Our <strong>pdf word counter</strong> extracts text from uploaded PDF files, and we support DOCX and TXT files too. Just drag and drop or use the Upload button — all processing happens on your device with no server uploads. For website content, simply <strong>paste text and count words</strong> directly into the editor. The <strong>word counter online free</strong> tool updates every statistic in real time as you type or paste.</p>
+          </div>
+
+          <div class="bg-canvas rounded-lg p-6 border border-hairline text-center">
+            <p class="text-body-md text-body max-w-2xl mx-auto"><strong>500 word essay counter</strong> — Type or paste your text above and watch the word count update instantly. Our <strong>character counter online</strong> tracks every letter, space, and punctuation mark. For students working on a <strong>college essay word count</strong> or a <strong>1000 word essay counter</strong>, the goal progress bars show how close you are to your target. The <strong>word counter for college application</strong> essays supports the Common App word limit and beyond. <strong>How many words is my essay?</strong> Just paste and see.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 sm:py-32 bg-canvas">
+      <div class="mx-auto max-w-[900px] px-4 sm:px-6">
+        <div class="text-center mb-12">
+          <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-canvas-soft text-caption text-body font-mono uppercase tracking-wider mb-4 border border-hairline">FAQ</span>
+          <h2 class="text-display-lg max-sm:text-display-md font-semibold tracking-[-1.28px] text-ink">Word Counter FAQs.</h2>
+          <p class="mt-3 text-body-lg text-body max-w-lg mx-auto">Answers to common questions about our free online word counter tool.</p>
+        </div>
+        <div class="space-y-4">
+          <article class="bg-canvas-soft rounded-lg p-6 shadow-level-3" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+            <h3 itemprop="name" class="text-display-sm font-semibold tracking-[-0.6px] text-ink">How many words can a word counter count?</h3>
+            <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+              <p itemprop="text" class="mt-3 text-body-md text-body">A word counter can count an unlimited number of words. Our <a href="/" class="text-link hover:text-link-deep transition-colors">free word counter</a> has no word or character limits — you can paste, type, or upload text of any length. Whether you need a <strong>500 word essay counter</strong>, a <strong>1000 word essay counter</strong>, or you want to count words in an entire book, the tool handles it instantly. The <strong>word counter online</strong> updates in real time as you type, showing exact <strong>word count</strong>, <strong>character count</strong>, sentences, paragraphs, and more for any amount of text.</p>
+            </div>
+          </article>
+          <article class="bg-canvas-soft rounded-lg p-6 shadow-level-3" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+            <h3 itemprop="name" class="text-display-sm font-semibold tracking-[-0.6px] text-ink">What is the best free online word counter tool?</h3>
+            <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+              <p itemprop="text" class="mt-3 text-body-md text-body">The best free online word counter tool is one that is accurate, private, and works with every language. <a href="/" class="text-link hover:text-link-deep transition-colors">wordcountergo.com</a> is widely considered the best <strong>free word counter</strong> because it offers real-time <strong>word count</strong> and <strong>character count</strong>, <strong>readability scores</strong> (Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog Index), <strong>keyword density analysis</strong>, social media limit checks, and file upload support for PDF, DOCX, and TXT files. Unlike other <strong>word count tools</strong> that send data to servers, our <strong>word counter online free</strong> tool processes everything in your browser — your text never leaves your device. It supports all languages including English, Spanish, French, Hindi, Chinese, Japanese, Arabic, Urdu, and more, making it the most versatile <strong>online word counter</strong> available.</p>
+            </div>
+          </article>
+          <article class="bg-canvas-soft rounded-lg p-6 shadow-level-3" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+            <h3 itemprop="name" class="text-display-sm font-semibold tracking-[-0.6px] text-ink">What does the word counter mean?</h3>
+            <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+              <p itemprop="text" class="mt-3 text-body-md text-body">A <strong>word counter</strong> is a tool that automatically counts the number of words in a given piece of text. Beyond just a <strong>word count</strong>, modern <strong>word counter tools</strong> also provide <strong>character counter</strong> functionality, sentence counting, paragraph detection, and detailed writing analytics. The term "word counter" refers to both the software tool and the metric itself — for example, "what is the word count of this essay?" Writers, students, SEO professionals, and content creators use a <strong>word counter free online</strong> to ensure their content meets specific length requirements for academic submissions, blog posts, social media, and professional documents. The <strong>meaning of word counter</strong> has expanded from a simple counting tool to a comprehensive writing assistant that includes <strong>letter counter</strong>, readability analysis, and keyword density tracking.</p>
+            </div>
+          </article>
+          <article class="bg-canvas-soft rounded-lg p-6 shadow-level-3" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+            <h3 itemprop="name" class="text-display-sm font-semibold tracking-[-0.6px] text-ink">How many letters are in a word counter?</h3>
+            <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+              <p itemprop="text" class="mt-3 text-body-md text-body">The phrase "word counter" contains 12 characters (including the space) or 11 letters total. More practically, a <strong>letter counter</strong> counts every letter, character, and symbol in your text. Our <strong>word counter online</strong> tool includes a built-in <strong>character counter</strong> that tracks letters, numbers, punctuation, and spaces separately. The <strong>letter frequency</strong> feature shows how many times each letter appears in your text, helping with tasks like <strong>count words and characters online</strong> for essays, social media posts, or SEO meta descriptions. Use the <strong>word counter tool</strong> to check <strong>how many characters</strong> are in your writing — it tracks total characters, characters without spaces, and individual letter frequency in real time.</p>
+            </div>
+          </article>
+          <article class="bg-canvas-soft rounded-lg p-6 shadow-level-3" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+            <h3 itemprop="name" class="text-display-sm font-semibold tracking-[-0.6px] text-ink">What is a super fast free word counter?</h3>
+            <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+              <p itemprop="text" class="mt-3 text-body-md text-body">A super fast free word counter is a tool that provides instant <strong>word count</strong> as you type, with zero delay and no button clicks needed. <a href="/" class="text-link hover:text-link-deep transition-colors">wordcountergo.com</a> is the fastest <strong>free word counter online</strong> because it updates every statistic — <strong>word count</strong>, <strong>character count</strong>, sentences, paragraphs, readability scores, keyword density, and social media limits — in real time as you type or paste text. The <strong>word counter free</strong> tool uses the native <code class="text-code font-mono bg-canvas-soft-2 px-1.5 py-0.5 rounded">Intl.Segmenter</code> API for instant Unicode word segmentation, making it a blazing-fast <strong>word counter tool</strong> for any language. Unlike slow server-based <strong>word counters</strong> that send text over the internet and wait for a response, our <strong>online word counter</strong> processes everything locally in your browser for the fastest possible experience. Just <strong>count words online free</strong> instantly — no sign-up, no ads, no limits.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 sm:py-32">
+      <div class="mx-auto max-w-[1400px] px-4 sm:px-6 text-center">
+        <span class="text-caption-mono font-mono uppercase tracking-wider text-mute" data-i18n="section.cta.badge">Free. Fast. Private.</span>
+        <p class="mt-4 text-body-lg text-body max-w-lg mx-auto" data-i18n="section.cta.text">
+          No sign-ups, no hidden limits. Just a fast, accurate word counter that works in every language.
+        </p>
+        <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a href="/faq" class="inline-flex items-center justify-center h-12 sm:h-10 px-6 sm:px-5 rounded-full bg-link text-white text-body-sm font-medium hover:bg-link-deep transition-colors no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-link w-full sm:w-auto" data-i18n="section.cta.faq">
+            Read the FAQ
+          </a>
+          <a href="/how-to-count-words" class="inline-flex items-center justify-center h-12 sm:h-10 px-6 sm:px-5 rounded-full border border-hairline text-body text-body-sm font-medium hover:bg-canvas-soft-2 transition-colors no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-link w-full sm:w-auto" data-i18n="section.cta.guide">
+            View the Guide
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <script>
+    document.querySelector('a[href="#word-counter"]')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      const section = document.getElementById('word-counter-root') || document.getElementById('word-counter');
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => {
+          const textarea = document.getElementById('text-input') as HTMLTextAreaElement | null;
+          textarea?.focus();
+        }, 500);
+      }
+    });
+  </script>
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Word Counter — Free Online Word & Character Counter",
+    "url": "https://wordcountergo.com",
+    "description": "Free online word counter tool. Count words, characters, sentences, paragraphs, and more in real time. Supports all languages. No sign-up required.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "author": { "@type": "Organization", "name": "wordcountergo.com", "url": "https://wordcountergo.com" },
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "featureList": [
+      "Real-time word counting",
+      "Character counting",
+      "Sentence and paragraph counting",
+      "Keyword density analysis",
+      "Readability scores",
+      "Social media limit checking",
+      "Multi-language support",
+      "PDF and DOCX text extraction",
+      "Find and replace",
+      "Case converter"
+    ],
+    "keywords": "word counter, free word counter, online word counter, character counter, word count tool, essay word counter, pdf word counter"
+  })} />
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wordcountergo.com" }
+    ]
+  })} />
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "wordcountergo.com Word Counter",
+    "operatingSystem": "Web",
+    "applicationCategory": "UtilitiesApplication",
+    "description": "Free online word counter and character counter tool. Count words, characters, sentences, and paragraphs in real time with full privacy.",
+    "url": "https://wordcountergo.com",
+    "sameAs": ["https://wordcountergo.com"],
+    "browserRequirements": "JavaScript enabled browser",
+    "softwareVersion": "1.0",
+    "offers": { "@type": "Offer", "price": "0" }
+  })} />
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How many words can a word counter count?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A word counter can count an unlimited number of words. Our free word counter has no word or character limits — you can paste, type, or upload text of any length. Whether you need a 500 word essay counter, a 1000 word essay counter, or you want to count words in an entire book, the tool handles it instantly."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the best free online word counter tool?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The best free online word counter tool is one that is accurate, private, and works with every language. wordcountergo.com offers real-time word count and character count, readability scores, keyword density analysis, social media limit checks, and file upload support for PDF, DOCX, and TXT files — all processed locally in your browser with no server uploads."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does the word counter mean?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A word counter is a tool that automatically counts the number of words in a given piece of text. Modern word counter tools also provide character counter functionality, sentence counting, paragraph detection, readability analysis, and keyword density tracking."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How many letters are in a word counter?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The phrase 'word counter' contains 12 characters including the space, or 11 letters. More practically, a word counter includes a letter counter that tracks every character, letter, and symbol in your text along with letter frequency distribution."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a super fast free word counter?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A super fast free word counter is a tool that provides instant word count as you type with zero delay. wordcountergo.com updates every statistic — word count, character count, sentences, paragraphs, readability scores, keyword density, and social media limits — in real time using the native Intl.Segmenter API for instant Unicode word segmentation."
+        }
+      }
+    ]
+  })} />
+</BaseLayout>
