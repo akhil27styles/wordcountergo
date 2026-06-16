@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<BaseLayout
+  title="Contact Us — wordcountergo.com"
+  description="Contact wordcountergo.com. Have feedback or questions about our free word counter? Get in touch with us."
+  keywords="contact wordcountergo, word counter support, contact word counter, word counter help, wordcountergo contact"
+>
+  <Header />
+
+  <main id="main-content" aria-label="Main content" class="mx-auto max-w-[900px] px-4 sm:px-6 pt-16 sm:pt-24 pb-16 sm:pb-32">
+    <div class="text-center mb-16">
+      <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-canvas-soft text-caption text-body font-mono uppercase tracking-wider mb-4 border border-hairline">Contact</span>
+      <h1 class="text-display-xl max-sm:text-[28px] max-sm:leading-[34px] sm:text-[56px] sm:leading-[56px] font-semibold tracking-[-2.4px] text-ink">Contact Us.</h1>
+      <p class="mt-3 text-body-lg text-body max-w-lg mx-auto">We'd love to hear from you. Get in touch with the wordcountergo.com team.</p>
+    </div>
+
+    <div class="max-w-lg mx-auto space-y-8">
+      <div class="bg-canvas-soft rounded-lg p-6 border border-hairline text-center">
+        <h2 class="text-display-sm font-semibold tracking-[-0.6px] text-ink mb-2">Email</h2>
+        <p class="text-body-md text-body">Send us an email at</p>
+        <a href="mailto:hello@wordcountergo.com" class="text-body-lg text-link hover:text-link-deep transition-colors font-medium">hello@wordcountergo.com</a>
+        <p class="mt-2 text-body-sm text-mute">We typically respond within 24 hours.</p>
+      </div>
+
+      <div class="bg-canvas-soft rounded-lg p-6 border border-hairline text-center">
+        <h2 class="text-display-sm font-semibold tracking-[-0.6px] text-ink mb-2">Report an Issue</h2>
+        <p class="text-body-md text-body">Found a bug or have a suggestion? Let us know and we'll take a look.</p>
+        <p class="mt-2 text-body-sm text-mute">We appreciate all feedback — it helps us improve the word counter for everyone.</p>
+      </div>
+
+      <div class="bg-canvas-soft rounded-lg p-6 border border-hairline text-center">
+        <h2 class="text-display-sm font-semibold tracking-[-0.6px] text-ink mb-2">Frequently Asked Questions</h2>
+        <p class="text-body-md text-body">Before reaching out, check our <a href="/faq" class="text-link hover:text-link-deep transition-colors">FAQ page</a> for quick answers to common questions about word counting.</p>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>

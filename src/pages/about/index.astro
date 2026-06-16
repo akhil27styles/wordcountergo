@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<BaseLayout
+  title="About Us — wordcountergo.com"
+  description="About wordcountergo.com — the free online word counter and character counter tool. Learn about our mission to provide fast, private, accurate word counting for everyone."
+  keywords="about wordcountergo, about word counter, free word counter team, online word counter about, word counter mission, word counter tool about"
+>
+  <Header />
+
+  <main id="main-content" aria-label="Main content" class="mx-auto max-w-[900px] px-4 sm:px-6 pt-16 sm:pt-24 pb-16 sm:pb-32">
+    <div class="text-center mb-16">
+      <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-canvas-soft text-caption text-body font-mono uppercase tracking-wider mb-4 border border-hairline">About</span>
+      <h1 class="text-display-xl max-sm:text-[28px] max-sm:leading-[34px] sm:text-[56px] sm:leading-[56px] font-semibold tracking-[-2.4px] text-ink">About Us.</h1>
+      <p class="mt-3 text-body-lg text-body max-w-lg mx-auto">Building the fastest, most private word counter on the web.</p>
+    </div>
+
+    <div class="space-y-8 text-body-md text-body leading-relaxed">
+      <section>
+        <h2 class="text-display-sm font-semibold tracking-[-0.6px] text-ink mb-3">Our Mission</h2>
+        <p><a href="/" class="text-link hover:text-link-deep transition-colors">wordcountergo.com</a> was built with a simple mission: provide a fast, accurate, and completely private word counter that works in every language. We believe that writing tools should be free, accessible, and respect your privacy — no sign-ups, no data collection, no limits.</p>
+        <p class="mt-3">Our <a href="/" class="text-link hover:text-link-deep transition-colors">free word counter</a> processes everything in your browser. Your text never touches any server, making it the most private <strong>online word counter</strong> available.</p>
+      </section>
+
+      <section>
+        <h2 class="text-display-sm font-semibold tracking-[-0.6px] text-ink mb-3">What Sets Us Apart</h2>
+        <div class="grid sm:grid-cols-2 gap-4 mt-3">
+          <div class="bg-canvas-soft rounded-lg p-5 border border-hairline">
+            <h3 class="text-body-sm font-semibold text-ink">100% Private</h3>
+            <p class="mt-1 text-body-sm text-body">All text processing happens in your browser. No servers, no tracking, no data collection.</p>
+          </div>
+          <div class="bg-canvas-soft rounded-lg p-5 border border-hairline">
+            <h3 class="text-body-sm font-semibold text-ink">Multi-Language</h3>
+            <p class="mt-1 text-body-sm text-body">Supports English, Spanish, French, Chinese, Arabic, Hindi, Japanese, Urdu, and more.</p>
+          </div>
+          <div class="bg-canvas-soft rounded-lg p-5 border border-hairline">
+            <h3 class="text-body-sm font-semibold text-ink">Real-Time Analytics</h3>
+            <p class="mt-1 text-body-sm text-body">Words, characters, readability scores, keyword density, social media limits — all updated as you type.</p>
+          </div>
+          <div class="bg-canvas-soft rounded-lg p-5 border border-hairline">
+            <h3 class="text-body-sm font-semibold text-ink">File Upload</h3>
+            <p class="mt-1 text-body-sm text-body">Upload PDF, DOCX, or TXT files for instant word count analysis — all processed on your device.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-display-sm font-semibold tracking-[-0.6px] text-ink mb-3">Why We Built This</h2>
+        <p>Existing online word counters had significant drawbacks: they sent your text to remote servers, had advertising clutter, required sign-ups, or didn't support non-English languages properly. We wanted a tool that:</p>
+        <ul class="list-disc pl-6 mt-2 space-y-1">
+          <li>Respects your privacy by keeping your text on your device.</li>
+          <li>Works for writers of every language, not just English.</li>
+          <li>Provides comprehensive analytics beyond just a simple word count.</li>
+          <li>Is completely free with no hidden limits or premium tiers.</li>
+          <li>Works offline and loads instantly with no distractions.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="text-display-sm font-semibold tracking-[-0.6px] text-ink mb-3">Technology</h2>
+        <p>Our word counter is built using modern web technologies including the <code class="text-code font-mono bg-canvas-soft-2 px-1.5 py-0.5 rounded">Intl.Segmenter</code> API for Unicode-compliant word segmentation across all languages, and client-side PDF/DOCX parsers that require zero server interaction. The website is built with Astro and Tailwind CSS for optimal performance.</p>
+      </section>
+
+      <section>
+        <h2 class="text-display-sm font-semibold tracking-[-0.6px] text-ink mb-3">Get in Touch</h2>
+        <p>We'd love to hear from you. Whether you have feedback, suggestions, or questions, <a href="/contact" class="text-link hover:text-link-deep transition-colors">contact us</a> — we read every message.</p>
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>

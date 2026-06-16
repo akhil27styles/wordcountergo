@@ -30,6 +30,20 @@ const currentPath = Astro.url.pathname;
       >
         Guide
       </a>
+      <a
+        href="/about"
+        class="px-3 py-1.5 max-sm:py-3 text-body-sm text-body rounded-full hover:bg-canvas-soft-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-link no-underline"
+        class:list={{ 'bg-canvas-soft-2! text-ink!': currentPath.startsWith('/about') }}
+      >
+        About
+      </a>
+      <a
+        href="/contact"
+        class="px-3 py-1.5 max-sm:py-3 text-body-sm text-body rounded-full hover:bg-canvas-soft-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-link no-underline"
+        class:list={{ 'bg-canvas-soft-2! text-ink!': currentPath.startsWith('/contact') }}
+      >
+        Contact
+      </a>
     </div>
 
     <div class="flex items-center gap-1">
