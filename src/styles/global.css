@@ -89,11 +89,6 @@
 @custom-variant dark (&:where(.dark, .dark *));
 @custom-variant max-sm (@media (width < 640px));
 
-::selection {
-  background-color: #171717;
-  color: #f2f2f2;
-}
-
 .dark {
   color-scheme: dark;
   --color-canvas: #171717;

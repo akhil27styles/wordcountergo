@@ -598,11 +598,11 @@
     try {
       const escaped = find.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escaped, 'gi');
+      const count = (textarea.value.match(regex) || []).length;
       const result = textarea.value.replace(regex, replace);
-      if (result !== textarea.value) {
+      if (count > 0) {
         textarea.value = result;
         update();
-        const count = (textarea.value.match(regex) || []).length;
         showToast(`Replaced ${count} occurrence${count !== 1 ? 's' : ''}`);
       } else {
         showToast(`No matches found for "${find}"`);
@@ -692,35 +692,25 @@
     });
   }
 
-  function extractPdfText(content: string): string[] {
+  function extractPdfTextSimple(content: string): string[] {
     const results: string[] = [];
-    const textPat = /\(((?:[^()\\]|\\.)*)\)/g;
-    let match: RegExpExecArray | null;
-
     const tjRegex = /\(((?:[^()\\]|\\.)*)\)\s*Tj/g;
+    let match: RegExpExecArray | null;
     while ((match = tjRegex.exec(content)) !== null) {
       results.push(unescapePdfString(match[1]));
     }
-
     const tjArrayRegex = /\[((?:[^\[\]\\]|\\.)*)\]\s*TJ/g;
     while ((match = tjArrayRegex.exec(content)) !== null) {
-      const parenParts = match[1].match(textPat);
-      if (parenParts) {
-        for (const p of parenParts) {
-          results.push(unescapePdfString(p.slice(1, -1)));
-        }
+      const textPat = /\(((?:[^()\\]|\\.)*)\)/g;
+      let pm: RegExpExecArray | null;
+      while ((pm = textPat.exec(match[1])) !== null) {
+        results.push(unescapePdfString(pm[1]));
       }
     }
-
-    const quoteRegex = /\(((?:[^()\\]|\\.)*)\)\s*'/g;
-    while ((match = quoteRegex.exec(content)) !== null) {
-      results.push(unescapePdfString(match[1]));
-    }
-
     return results;
   }
 
-  async function parsePdf(buffer: ArrayBuffer): Promise<string> {
+  async function parsePdfFallback(buffer: ArrayBuffer): Promise<string> {
     const data = new Uint8Array(buffer);
     const textDecoder = new TextDecoder('latin-1');
     const text = textDecoder.decode(data);
@@ -728,62 +718,105 @@
     const allText: string[] = [];
     let searchPos = 0;
 
-      while (searchPos < text.length) {
-        const streamMatch = text.slice(searchPos).match(/stream[ \t]*[\r\n]+/);
-        if (!streamMatch) break;
+    while (searchPos < text.length) {
+      const streamMatch = text.slice(searchPos).match(/stream[ \t]*[\r\n]+/);
+      if (!streamMatch) break;
 
-        const streamPos = searchPos + streamMatch.index!;
-        const dataStart = streamPos + streamMatch[0].length;
+      const streamPos = searchPos + streamMatch.index!;
+      const dataStart = streamPos + streamMatch[0].length;
 
-        const preStream = text.slice(Math.max(0, streamPos - 300), streamPos);
-        const isFlate = /\/Filter\s*\/FlateDecode/.test(preStream) || /\/Filter\s*\[\s*\/FlateDecode\s*\]/.test(preStream);
+      const preStream = text.slice(Math.max(0, streamPos - 500), streamPos);
+      const isFlate = /\/Filter\s*\/FlateDecode/.test(preStream) || /\/Filter\s*\[\s*\/FlateDecode\s*\]/.test(preStream);
 
-        const afterStream = text.slice(dataStart);
-        let endIdx = afterStream.search(/[\r\n]+\s*endstream/);
-        let matchLen = 0;
-        if (endIdx === -1) {
-          endIdx = afterStream.indexOf('endstream');
-          matchLen = 9;
-        } else {
-          matchLen = afterStream.slice(endIdx).match(/[\r\n]+\s*endstream/)![0].length;
-        }
-        if (endIdx === -1) break;
-
-        const endstreamPos = dataStart + endIdx;
-        let dataEnd = endstreamPos;
-        while (dataEnd > dataStart && (text[dataEnd - 1] === ' ' || text[dataEnd - 1] === '\t')) {
-          dataEnd--;
-        }
-
-        try {
-          if (isFlate) {
-            const rawData = data.slice(dataStart, dataEnd);
-            let decoded: ArrayBuffer;
-            try {
-              const ds = new DecompressionStream('deflate');
-              const stream = new Blob([rawData]).stream().pipeThrough(ds);
-              decoded = await new Response(stream).arrayBuffer();
-            } catch {
-              const ds = new DecompressionStream('deflate-raw');
-              const stream = new Blob([rawData]).stream().pipeThrough(ds);
-              decoded = await new Response(stream).arrayBuffer();
-            }
-            allText.push(...extractPdfText(textDecoder.decode(decoded)));
-          } else {
-            allText.push(...extractPdfText(text.slice(dataStart, dataEnd)));
-          }
-        } catch {}
-
-        searchPos = dataStart + endIdx + matchLen;
+      const afterStream = text.slice(dataStart);
+      let endIdx = afterStream.search(/[\r\n]+\s*endstream/);
+      let matchLen = 0;
+      if (endIdx === -1) {
+        endIdx = afterStream.indexOf('endstream');
+        matchLen = 9;
+      } else {
+        matchLen = afterStream.slice(endIdx).match(/[\r\n]+\s*endstream/)![0].length;
       }
+      if (endIdx === -1) break;
+
+      let dataEnd = dataStart + endIdx;
+      while (dataEnd > dataStart && (text[dataEnd - 1] === ' ' || text[dataEnd - 1] === '\t' || text[dataEnd - 1] === '\n' || text[dataEnd - 1] === '\r')) {
+        dataEnd--;
+      }
+
+      try {
+        if (isFlate) {
+          const rawData = data.slice(dataStart, dataEnd);
+          let decoded: ArrayBuffer;
+          try {
+            const ds = new DecompressionStream('deflate');
+            const s = new Blob([rawData]).stream().pipeThrough(ds);
+            decoded = await new Response(s).arrayBuffer();
+          } catch {
+            const ds = new DecompressionStream('deflate-raw');
+            const s = new Blob([rawData]).stream().pipeThrough(ds);
+            decoded = await new Response(s).arrayBuffer();
+          }
+          allText.push(...extractPdfTextSimple(textDecoder.decode(decoded)));
+        } else {
+          allText.push(...extractPdfTextSimple(text.slice(dataStart, dataEnd)));
+        }
+      } catch {}
+
+      searchPos = dataStart + endIdx + matchLen;
+    }
 
     const btRegex = /BT[\s\S]*?ET/g;
     let btMatch: RegExpExecArray | null;
     while ((btMatch = btRegex.exec(text)) !== null) {
-      allText.push(...extractPdfText(btMatch[0]));
+      allText.push(...extractPdfTextSimple(btMatch[0]));
     }
 
     return allText.filter(t => t.trim()).join('\n');
+  }
+
+  function extractPlainText(raw: string): string {
+    const lines: string[] = [];
+    const matches = raw.match(/[\x20-\x7E]{4,}/g);
+    if (matches) {
+      for (const m of matches) {
+        const trimmed = m.replace(/[^a-zA-Z0-9\s,.!?;:'"()\-]/g, ' ').trim();
+        if (trimmed.split(/\s+/).length >= 3) lines.push(trimmed);
+      }
+    }
+    return lines.join('\n');
+  }
+
+  async function parsePdf(buffer: ArrayBuffer): Promise<string> {
+    try {
+      const pdfjsLib = await import('pdfjs-dist');
+      pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
+
+      const loadingTask = pdfjsLib.getDocument({ data: buffer });
+      const pdf = await loadingTask.promise;
+
+      const textParts: string[] = [];
+      for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+        const page = await pdf.getPage(pageNum);
+        const textContent = await page.getTextContent();
+        const pageText = textContent.items
+          .map((item: any) => ('str' in item ? item.str : ''))
+          .join(' ');
+        textParts.push(pageText);
+      }
+
+      const result = textParts.join('\n\n');
+      if (result.trim()) return result;
+    } catch (e) {
+      console.warn('PDF.js parsing failed, trying fallback:', e);
+    }
+
+    try {
+      const fallback = await parsePdfFallback(buffer);
+      if (fallback.trim()) return fallback;
+    } catch {}
+
+    return extractPlainText(new TextDecoder('latin-1').decode(new Uint8Array(buffer)));
   }
 
   async function handleFile(file: File): Promise<void> {
