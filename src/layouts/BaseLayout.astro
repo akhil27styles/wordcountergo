@@ -84,7 +84,7 @@ const siteKeywords = keywords || 'word counter, free word counter, online word c
     <slot />
 
     <script>
-      const LOCALES = { en: 'English', fr: 'Fran\u00E7ais', es: 'Espa\u00F1ol', de: 'Deutsch', ja: '\u65E5\u672C\u8A9E', 'zh-CN': '\u4E2D\u6587\u7B80\u4F53', hi: '\u0939\u093F\u0928\u094D\u0926\u0940', ur: '\u0627\u064F\u0631\u062F\u0648' };
+      const LOCALES = { en: 'English', fr: 'Fran\u00E7ais', es: 'Espa\u00F1ol', de: 'Deutsch', it: 'Italiano', pt: 'Portugu\u00EAs', nl: 'Nederlands', pl: 'Polski', sv: 'Svenska', ro: 'Rom\u00E2n\u0103', el: '\u0395\u03BB\u03BB\u03B7\u03BD\u03B9\u03BA\u03AC', ru: '\u0420\u0443\u0441\u0441\u043A\u0438\u0439', ja: '\u65E5\u672C\u8A9E', 'zh-CN': '\u4E2D\u6587\u7B80\u4F53', hi: '\u0939\u093F\u0928\u094D\u0926\u0940', ur: '\u0627\u064F\u0631\u062F\u0648' };
       const LOCALE_KEYS = Object.keys(LOCALES);
 
       function getLocale() {
@@ -94,6 +94,14 @@ const siteKeywords = keywords || 'word counter, free word counter, online word c
         } catch {}
         try {
           const lang = navigator.language;
+          if (lang.startsWith('it')) return 'it';
+          if (lang.startsWith('pt')) return 'pt';
+          if (lang.startsWith('nl')) return 'nl';
+          if (lang.startsWith('pl')) return 'pl';
+          if (lang.startsWith('sv')) return 'sv';
+          if (lang.startsWith('ro')) return 'ro';
+          if (lang.startsWith('el')) return 'el';
+          if (lang.startsWith('ru')) return 'ru';
           if (lang.startsWith('fr')) return 'fr';
           if (lang.startsWith('es')) return 'es';
           if (lang.startsWith('de')) return 'de';

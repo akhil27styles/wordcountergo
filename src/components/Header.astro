@@ -48,14 +48,22 @@ const currentPath = Astro.url.pathname;
 
     <div class="flex items-center gap-1">
       <div class="relative" id="lang-selector">
-        <button id="lang-btn" class="inline-flex items-center justify-center w-8 h-8 max-sm:w-10 max-sm:h-10 rounded-full text-body hover:bg-canvas-soft-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-link" aria-label="Language" aria-haspopup="true" aria-expanded="false">
-          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <button id="lang-btn" class="inline-flex items-center justify-center w-8 h-8 max-sm:w-10 max-sm:h-10 rounded-full text-body hover:bg-canvas-soft-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-link text-caption font-semibold" aria-label="Language" aria-haspopup="true" aria-expanded="false">
+          <span id="lang-label" class="tabular-nums">EN</span>
         </button>
-        <div id="lang-dropdown" class="hidden absolute right-0 mt-1 w-40 bg-canvas border border-hairline rounded-lg shadow-level-4 py-1 z-50" role="menu" aria-label="Select language">
+        <div id="lang-dropdown" class="hidden absolute right-0 mt-1 w-44 bg-canvas border border-hairline rounded-lg shadow-level-4 py-1 z-50 max-h-80 overflow-y-auto" role="menu" aria-label="Select language">
           <button data-lang="en" class="w-full text-start px-3 py-1.5 text-body-sm text-body hover:bg-canvas-soft-2 transition-colors" role="menuitem">English</button>
           <button data-lang="fr" class="w-full text-start px-3 py-1.5 text-body-sm text-body hover:bg-canvas-soft-2 transition-colors" role="menuitem">Français</button>
           <button data-lang="es" class="w-full text-start px-3 py-1.5 text-body-sm text-body hover:bg-canvas-soft-2 transition-colors" role="menuitem">Español</button>
           <button data-lang="de" class="w-full text-start px-3 py-1.5 text-body-sm text-body hover:bg-canvas-soft-2 transition-colors" role="menuitem">Deutsch</button>
+          <button data-lang="it" class="w-full text-start px-3 py-1.5 text-body-sm text-body hover:bg-canvas-soft-2 transition-colors" role="menuitem">Italiano</button>
+          <button data-lang="pt" class="w-full text-start px-3 py-1.5 text-body-sm text-body hover:bg-canvas-soft-2 transition-colors" role="menuitem">Português</button>
+          <button data-lang="nl" class="w-full text-start px-3 py-1.5 text-body-sm text-body hover:bg-canvas-soft-2 transition-colors" role="menuitem">Nederlands</button>
+          <button data-lang="pl" class="w-full text-start px-3 py-1.5 text-body-sm text-body hover:bg-canvas-soft-2 transition-colors" role="menuitem">Polski</button>
+          <button data-lang="sv" class="w-full text-start px-3 py-1.5 text-body-sm text-body hover:bg-canvas-soft-2 transition-colors" role="menuitem">Svenska</button>
+          <button data-lang="ro" class="w-full text-start px-3 py-1.5 text-body-sm text-body hover:bg-canvas-soft-2 transition-colors" role="menuitem">Română</button>
+          <button data-lang="el" class="w-full text-start px-3 py-1.5 text-body-sm text-body hover:bg-canvas-soft-2 transition-colors" role="menuitem">Ελληνικά</button>
+          <button data-lang="ru" class="w-full text-start px-3 py-1.5 text-body-sm text-body hover:bg-canvas-soft-2 transition-colors" role="menuitem">Русский</button>
           <button data-lang="ja" class="w-full text-start px-3 py-1.5 text-body-sm text-body hover:bg-canvas-soft-2 transition-colors" role="menuitem">日本語</button>
           <button data-lang="zh-CN" class="w-full text-start px-3 py-1.5 text-body-sm text-body hover:bg-canvas-soft-2 transition-colors" role="menuitem">中文简体</button>
           <button data-lang="hi" class="w-full text-start px-3 py-1.5 text-body-sm text-body hover:bg-canvas-soft-2 transition-colors" role="menuitem">हिन्दी</button>
@@ -80,11 +88,14 @@ const currentPath = Astro.url.pathname;
   const langSelector = document.getElementById('lang-selector')!;
   const langBtn = document.getElementById('lang-btn')!;
   const langDropdown = document.getElementById('lang-dropdown')!;
-  const LOCALE_KEYS = ['en', 'fr', 'es', 'de', 'ja', 'zh-CN', 'hi', 'ur'];
+  const LOCALE_KEYS = ['en', 'fr', 'es', 'de', 'it', 'pt', 'nl', 'pl', 'sv', 'ro', 'el', 'ru', 'ja', 'zh-CN', 'hi', 'ur'];
+  const LOCALE_LABELS = { en: 'EN', fr: 'FR', es: 'ES', de: 'DE', it: 'IT', pt: 'PT', nl: 'NL', pl: 'PL', sv: 'SV', ro: 'RO', el: 'ΕΛ', ru: 'RU', ja: '日本語', 'zh-CN': '中文', hi: 'हिन्दी', ur: 'اردو' };
+  const langLabel = document.getElementById('lang-label')!;
   function getLocale() {
     try { const s = localStorage.getItem('wordcountergo-locale'); if (s && LOCALE_KEYS.includes(s)) return s; } catch {}
     return 'en';
   }
+  langLabel.textContent = LOCALE_LABELS[getLocale()] || 'EN';
   langBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     const isOpen = !langDropdown.classList.contains('hidden');
