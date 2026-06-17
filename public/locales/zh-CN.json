@@ -183,5 +183,5 @@
   "tool.case.toggle": "切换大小写",
   "tool.stats.spaces": "空格",
   "tool.drop.title": "将文件拖放到此处",
-  "tool.drop.formats": ".txt, .docx, .doc, .pdf"
+  "tool.drop.formats": ".txt, .docx, .doc, .pdf, .png, .jpg"
 }

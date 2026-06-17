@@ -183,5 +183,5 @@
   "tool.case.toggle": "gROSS/kLEIN WECHSELN",
   "tool.stats.spaces": "Leerzeichen",
   "tool.drop.title": "Datei hier ablegen",
-  "tool.drop.formats": ".txt, .docx, .doc, .pdf"
+  "tool.drop.formats": ".txt, .docx, .doc, .pdf, .png, .jpg"
 }

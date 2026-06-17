@@ -181,7 +181,7 @@
   "footer.legal": "कानूनी",
   "footer.privacy": "गोपनीयता नीति",
   "tool.drop.title": "फ़ाइल यहाँ छोड़ें",
-  "tool.drop.formats": ".txt, .docx, .doc, .pdf",
+  "tool.drop.formats": ".txt, .docx, .doc, .pdf, .png, .jpg",
   "footer.terms": "सेवा की शर्तें",
   "footer.copyright": "© {year} wordcountergo.com। सर्वाधिकार सुरक्षित।"
 }

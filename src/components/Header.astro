@@ -94,7 +94,10 @@ const currentPath = Astro.url.pathname;
   langDropdown.querySelectorAll('[data-lang]').forEach(btn => {
     btn.addEventListener('click', () => {
       const lang = btn.getAttribute('data-lang');
-      try { localStorage.setItem('wordcountergo-locale', lang); } catch {}
+      try {
+        localStorage.setItem('wordcountergo-locale', lang);
+        localStorage.setItem('wordcountergo-locale-source', 'manual');
+      } catch {}
       location.reload();
     });
   });

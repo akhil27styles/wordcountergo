@@ -183,5 +183,5 @@
   "tool.case.toggle": "tOGGLE cASE",
   "tool.stats.spaces": "Spaces",
   "tool.drop.title": "Drop file here",
-  "tool.drop.formats": ".txt, .docx, .doc, .pdf"
+  "tool.drop.formats": ".txt, .docx, .doc, .pdf, .png, .jpg"
 }

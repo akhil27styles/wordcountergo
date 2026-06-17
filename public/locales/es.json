@@ -183,5 +183,5 @@
   "tool.case.toggle": "aLTERNAR mAYÚSCULAS",
   "tool.stats.spaces": "Espacios",
   "tool.drop.title": "Suelta el archivo aquí",
-  "tool.drop.formats": ".txt, .docx, .doc, .pdf"
+  "tool.drop.formats": ".txt, .docx, .doc, .pdf, .png, .jpg"
 }

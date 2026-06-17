@@ -18,7 +18,7 @@
           <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
           <span data-i18n="tool.upload">Upload</span>
         </button>
-        <input type="file" id="file-input" accept=".txt,.docx,.doc,.pdf" hidden>
+        <input type="file" id="file-input" accept=".txt,.docx,.doc,.pdf,.png,.jpg,.jpeg" hidden>
       </div>
     </div>
 
@@ -260,11 +260,17 @@
         </div>
       </div>
     </div>
+    <div id="loading-overlay" class="absolute inset-0 z-10 bg-canvas/90 rounded-lg flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-200">
+      <div class="text-center px-4">
+        <div class="mx-auto mb-3 w-8 h-8 border-2 border-link border-t-transparent rounded-full animate-spin"></div>
+        <p class="text-body-md text-link font-semibold" data-i18n="tool.loading.text">Parsing file...</p>
+      </div>
+    </div>
     <div id="drop-zone" class="absolute inset-0 z-10 bg-canvas/90 border-2 border-dashed border-link rounded-lg flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-200">
       <div class="text-center px-4">
         <svg class="mx-auto mb-2" aria-hidden="true" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
         <p class="text-body-md text-link font-semibold" data-i18n="tool.drop.title">Drop file here</p>
-        <p class="text-caption text-mute mt-1" data-i18n="tool.drop.formats">.txt, .docx, .doc, .pdf</p>
+        <p class="text-caption text-mute mt-1" data-i18n="tool.drop.formats">.txt, .docx, .doc, .pdf, .png, .jpg</p>
       </div>
     </div>
   </div>
@@ -683,163 +689,118 @@
     return results.join('\n');
   }
 
-  function unescapePdfString(s: string): string {
-    return s.replace(/\\([nrt\\()])/g, (_, c: string) => {
-      if (c === 'n') return '\n';
-      if (c === 'r') return '\r';
-      if (c === 't') return '\t';
-      return c;
-    });
-  }
-
-  function extractPdfTextSimple(content: string): string[] {
-    const results: string[] = [];
+  function extractPlainText(raw) {
+    const results = [];
     const tjRegex = /\(((?:[^()\\]|\\.)*)\)\s*Tj/g;
-    let match: RegExpExecArray | null;
-    while ((match = tjRegex.exec(content)) !== null) {
-      results.push(unescapePdfString(match[1]));
+    let m;
+    while ((m = tjRegex.exec(raw)) !== null) {
+      const txt = m[1].replace(/\\([nrt\\()])/g, function(_, c) {
+        return c === 'n' ? '\n' : c === 'r' ? '\r' : c === 't' ? '\t' : c;
+      });
+      if (txt.trim().length > 0) results.push(txt);
     }
-    const tjArrayRegex = /\[((?:[^\[\]\\]|\\.)*)\]\s*TJ/g;
-    while ((match = tjArrayRegex.exec(content)) !== null) {
-      const textPat = /\(((?:[^()\\]|\\.)*)\)/g;
-      let pm: RegExpExecArray | null;
-      while ((pm = textPat.exec(match[1])) !== null) {
-        results.push(unescapePdfString(pm[1]));
-      }
-    }
-    return results;
-  }
+    if (results.length > 0) return results.join('\n');
 
-  async function parsePdfFallback(buffer: ArrayBuffer): Promise<string> {
-    const data = new Uint8Array(buffer);
-    const textDecoder = new TextDecoder('latin-1');
-    const text = textDecoder.decode(data);
-
-    const allText: string[] = [];
-    let searchPos = 0;
-
-    while (searchPos < text.length) {
-      const streamMatch = text.slice(searchPos).match(/stream[ \t]*[\r\n]+/);
-      if (!streamMatch) break;
-
-      const streamPos = searchPos + streamMatch.index!;
-      const dataStart = streamPos + streamMatch[0].length;
-
-      const preStream = text.slice(Math.max(0, streamPos - 500), streamPos);
-      const isFlate = /\/Filter\s*\/FlateDecode/.test(preStream) || /\/Filter\s*\[\s*\/FlateDecode\s*\]/.test(preStream);
-
-      const afterStream = text.slice(dataStart);
-      let endIdx = afterStream.search(/[\r\n]+\s*endstream/);
-      let matchLen = 0;
-      if (endIdx === -1) {
-        endIdx = afterStream.indexOf('endstream');
-        matchLen = 9;
-      } else {
-        matchLen = afterStream.slice(endIdx).match(/[\r\n]+\s*endstream/)![0].length;
-      }
-      if (endIdx === -1) break;
-
-      let dataEnd = dataStart + endIdx;
-      while (dataEnd > dataStart && (text[dataEnd - 1] === ' ' || text[dataEnd - 1] === '\t' || text[dataEnd - 1] === '\n' || text[dataEnd - 1] === '\r')) {
-        dataEnd--;
-      }
-
-      try {
-        if (isFlate) {
-          const rawData = data.slice(dataStart, dataEnd);
-          let decoded: ArrayBuffer;
-          try {
-            const ds = new DecompressionStream('deflate');
-            const s = new Blob([rawData]).stream().pipeThrough(ds);
-            decoded = await new Response(s).arrayBuffer();
-          } catch {
-            const ds = new DecompressionStream('deflate-raw');
-            const s = new Blob([rawData]).stream().pipeThrough(ds);
-            decoded = await new Response(s).arrayBuffer();
-          }
-          allText.push(...extractPdfTextSimple(textDecoder.decode(decoded)));
-        } else {
-          allText.push(...extractPdfTextSimple(text.slice(dataStart, dataEnd)));
-        }
-      } catch {}
-
-      searchPos = dataStart + endIdx + matchLen;
-    }
-
-    const btRegex = /BT[\s\S]*?ET/g;
-    let btMatch: RegExpExecArray | null;
-    while ((btMatch = btRegex.exec(text)) !== null) {
-      allText.push(...extractPdfTextSimple(btMatch[0]));
-    }
-
-    return allText.filter(t => t.trim()).join('\n');
-  }
-
-  function extractPlainText(raw: string): string {
-    const lines: string[] = [];
-    const matches = raw.match(/[\x20-\x7E]{4,}/g);
+    const lines = [];
+    const matches = raw.match(/[\x20-\x7E\u00A0-\u00FF]{4,}/g);
     if (matches) {
-      for (const m of matches) {
-        const trimmed = m.replace(/[^a-zA-Z0-9\s,.!?;:'"()\-]/g, ' ').trim();
-        if (trimmed.split(/\s+/).length >= 3) lines.push(trimmed);
+      for (let i = 0; i < matches.length; i++) {
+        if (/^[\d\s]+$/.test(matches[i]) || /^\/\w/.test(matches[i])) continue;
+        const trimmed = matches[i].replace(/[^\w\s,.!?;:'"()\-\/#@$%&*]/g, ' ').trim();
+        if (trimmed.length > 8 && trimmed.split(/\s+/).length >= 3) lines.push(trimmed);
       }
     }
     return lines.join('\n');
   }
 
-  async function parsePdf(buffer: ArrayBuffer): Promise<string> {
+  async function parsePdf(buffer) {
     try {
-      const pdfjsLib = await import('pdfjs-dist');
-      pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
+      const pdfjsLib = await import(window.location.origin + '/pdf.mjs');
+      pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf-worker.mjs';
 
-      const loadingTask = pdfjsLib.getDocument({ data: buffer });
-      const pdf = await loadingTask.promise;
+      const pdfPromise = pdfjsLib.getDocument({ data: buffer }).promise;
+      const pdf = await Promise.race([
+        pdfPromise,
+        new Promise(function(_, reject) {
+          setTimeout(() => reject(new Error('PDF.js worker timed out')), 15000);
+        })
+      ]);
 
-      const textParts: string[] = [];
+      const textParts = [];
       for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
         const page = await pdf.getPage(pageNum);
         const textContent = await page.getTextContent();
-        const pageText = textContent.items
-          .map((item: any) => ('str' in item ? item.str : ''))
-          .join(' ');
+        const pageText = textContent.items.map(function(item) {
+          return 'str' in item ? item.str : '';
+        }).join(' ');
         textParts.push(pageText);
       }
 
       const result = textParts.join('\n\n');
       if (result.trim()) return result;
     } catch (e) {
-      console.warn('PDF.js parsing failed, trying fallback:', e);
+      console.warn('PDF.js failed, trying raw extraction:', e);
     }
 
-    try {
-      const fallback = await parsePdfFallback(buffer);
-      if (fallback.trim()) return fallback;
-    } catch {}
-
-    return extractPlainText(new TextDecoder('latin-1').decode(new Uint8Array(buffer)));
+    const raw = new TextDecoder('latin-1').decode(new Uint8Array(buffer));
+    return extractPlainText(raw);
   }
 
-  async function handleFile(file: File): Promise<void> {
+  const loadingOverlay = document.getElementById('loading-overlay');
+  function showLoading(show) {
+    loadingOverlay.classList.toggle('opacity-0', !show);
+    loadingOverlay.classList.toggle('pointer-events-none', !show);
+  }
+
+  async function extractImageText(file) {
+    const Tesseract = await import('tesseract.js');
+    const worker = await Tesseract.createWorker('eng');
+    const { data } = await worker.recognize(file);
+    await worker.terminate();
+    return data.text;
+  }
+
+  async function handleFile(file) {
     const ext = file.name.split('.').pop()?.toLowerCase();
+    showLoading(true);
     try {
+      let text;
       if (ext === 'txt') {
-        textarea.value = await file.text();
+        text = await file.text();
       } else if (ext === 'docx') {
         const buffer = await file.arrayBuffer();
-        textarea.value = await parseDocx(buffer);
+        text = await parseDocx(buffer);
       } else if (ext === 'doc') {
+        showLoading(false);
         showToast('.doc files are not supported. Try saving as .docx');
         return;
       } else if (ext === 'pdf') {
         const buffer = await file.arrayBuffer();
-        textarea.value = await parsePdf(buffer);
+        text = await parsePdf(buffer);
+        if (!text.trim()) {
+          showLoading(false);
+          showToast('This PDF format could not be read. The text may be in images or use an unsupported encoding.');
+          return;
+        }
+      } else if (ext === 'png' || ext === 'jpg' || ext === 'jpeg') {
+        text = await extractImageText(file);
+        if (!text.trim()) {
+          showLoading(false);
+          showToast('No text could be extracted from this image.');
+          return;
+        }
       } else {
-        showToast('Unsupported format. Use .txt, .docx, or .pdf');
+        showLoading(false);
+        showToast('Unsupported format. Use .txt, .docx, .pdf, .png, or .jpg');
         return;
       }
+      textarea.value = text;
       update();
+      showLoading(false);
       showToast(`Loaded ${file.name}`);
     } catch (e) {
+      console.error('handleFile error:', e, 'file:', file.name);
+      showLoading(false);
       showToast(`Could not read ${file.name}`);
     }
   }

@@ -147,6 +147,21 @@ const siteKeywords = keywords || 'word counter, free word counter, online word c
       if (locale !== 'en') {
         document.documentElement.classList.add('translated');
       }
+
+      var localeSource;
+      try { localeSource = localStorage.getItem('wordcountergo-locale-source'); } catch {}
+
+      if (localeSource !== 'manual') {
+        fetch('/api/locale').then(function(r) { return r.json(); }).then(function(data) {
+          if (data.locale && data.locale !== locale) {
+            try {
+              localStorage.setItem('wordcountergo-locale', data.locale);
+              localStorage.setItem('wordcountergo-locale-source', 'geo');
+            } catch {}
+            location.reload();
+          }
+        }).catch(function() {});
+      }
     </script>
   </body>
 </html>

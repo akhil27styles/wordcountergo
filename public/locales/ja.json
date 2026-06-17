@@ -183,5 +183,5 @@
   "tool.case.toggle": "大文字小文字切替",
   "tool.stats.spaces": "スペース",
   "tool.drop.title": "ここにファイルをドロップ",
-  "tool.drop.formats": ".txt, .docx, .doc, .pdf"
+  "tool.drop.formats": ".txt, .docx, .doc, .pdf, .png, .jpg"
 }
