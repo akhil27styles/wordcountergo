@@ -13,6 +13,8 @@
   "tool.clear": "Effacer",
   "tool.export": "Exporter",
   "tool.upload": "Importer",
+  "tool.undo": "Annuler",
+  "tool.redo": "Rétablir",
   "tool.textarea-placeholder": "Collez ou tapez votre texte ici... Fonctionne avec toutes les langues.",
   "tool.stats.words": "Mots",
   "tool.stats.characters": "Caractères",

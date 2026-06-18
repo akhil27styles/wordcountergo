@@ -13,6 +13,8 @@
   "tool.clear": "Wyczyść",
   "tool.export": "Eksportuj",
   "tool.upload": "Prześlij",
+  "tool.undo": "Cofnij",
+  "tool.redo": "Ponów",
   "tool.textarea-placeholder": "Wklej lub wpisz tekst tutaj... Działa z każdym językiem.",
   "tool.stats.words": "Słowa",
   "tool.stats.characters": "Znaki",

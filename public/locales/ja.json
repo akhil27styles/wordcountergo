@@ -13,6 +13,8 @@
   "tool.clear": "クリア",
   "tool.export": "エクスポート",
   "tool.upload": "アップロード",
+  "tool.undo": "元に戻す",
+  "tool.redo": "やり直す",
   "tool.textarea-placeholder": "ここにテキストを入力または貼り付け... すべての言語に対応。",
   "tool.stats.words": "単語",
   "tool.stats.characters": "文字",

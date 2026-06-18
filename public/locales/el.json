@@ -13,6 +13,8 @@
   "tool.clear": "Εκκαθάριση",
   "tool.export": "Εξαγωγή",
   "tool.upload": "Μεταφόρτωση",
+  "tool.undo": "Αναίρεση",
+  "tool.redo": "Επανάληψη",
   "tool.textarea-placeholder": "Επικολλήστε ή πληκτρολογήστε το κείμενό σας εδώ... Λειτουργεί με κάθε γλώσσα.",
   "tool.stats.words": "Λέξεις",
   "tool.stats.characters": "Χαρακτήρες",

@@ -13,6 +13,8 @@
   "tool.clear": "Șterge",
   "tool.export": "Exportă",
   "tool.upload": "Încarcă",
+  "tool.undo": "Anulează",
+  "tool.redo": "Refă",
   "tool.textarea-placeholder": "Lipește sau scrie textul aici... Funcționează cu orice limbă.",
   "tool.stats.words": "Cuvinte",
   "tool.stats.characters": "Caractere",

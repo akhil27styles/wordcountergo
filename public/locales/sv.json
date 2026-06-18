@@ -13,6 +13,8 @@
   "tool.clear": "Rensa",
   "tool.export": "Exportera",
   "tool.upload": "Ladda upp",
+  "tool.undo": "Ångra",
+  "tool.redo": "Gör om",
   "tool.textarea-placeholder": "Klistra in eller skriv din text här... Fungerar med alla språk.",
   "tool.stats.words": "Ord",
   "tool.stats.characters": "Tecken",

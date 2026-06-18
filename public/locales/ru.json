@@ -13,6 +13,8 @@
   "tool.clear": "Очистить",
   "tool.export": "Экспорт",
   "tool.upload": "Загрузить",
+  "tool.undo": "Отменить",
+  "tool.redo": "Повторить",
   "tool.textarea-placeholder": "Вставьте или введите текст здесь... Работает с любым языком.",
   "tool.stats.words": "Слова",
   "tool.stats.characters": "Символы",

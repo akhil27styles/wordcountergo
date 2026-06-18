@@ -13,6 +13,8 @@
   "tool.clear": "صاف کریں",
   "tool.export": "برآمد",
   "tool.upload": "اپ لوڈ",
+  "tool.undo": "رد کریں",
+  "tool.redo": "دوبارہ کریں",
   "tool.textarea-placeholder": "اپنا متن یہاں پیسٹ یا ٹائپ کریں... تمام زبانوں کے ساتھ کام کرتا ہے۔",
   "tool.stats.words": "الفاظ",
   "tool.stats.characters": "حروف",

@@ -13,6 +13,8 @@
   "tool.clear": "Wissen",
   "tool.export": "Exporteren",
   "tool.upload": "Uploaden",
+  "tool.undo": "Ongedaan maken",
+  "tool.redo": "Opnieuw",
   "tool.textarea-placeholder": "Plak of typ hier uw tekst... Werkt met elke taal.",
   "tool.stats.words": "Woorden",
   "tool.stats.characters": "Tekens",

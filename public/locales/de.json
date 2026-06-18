@@ -13,6 +13,8 @@
   "tool.clear": "Löschen",
   "tool.export": "Exportieren",
   "tool.upload": "Hochladen",
+  "tool.undo": "Rückgängig",
+  "tool.redo": "Wiederholen",
   "tool.textarea-placeholder": "Fügen Sie Ihren Text hier ein... Funktioniert mit jeder Sprache.",
   "tool.stats.words": "Wörter",
   "tool.stats.characters": "Zeichen",

@@ -13,6 +13,8 @@
   "tool.clear": "Limpiar",
   "tool.export": "Exportar",
   "tool.upload": "Subir",
+  "tool.undo": "Deshacer",
+  "tool.redo": "Rehacer",
   "tool.textarea-placeholder": "Pegue o escriba su texto aquí... Funciona con cualquier idioma.",
   "tool.stats.words": "Palabras",
   "tool.stats.characters": "Caracteres",

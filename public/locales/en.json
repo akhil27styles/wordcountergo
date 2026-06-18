@@ -13,6 +13,8 @@
   "tool.clear": "Clear",
   "tool.export": "Export",
   "tool.upload": "Upload",
+  "tool.undo": "Undo",
+  "tool.redo": "Redo",
   "tool.textarea-placeholder": "Paste or type your text here... Works with any language.",
   "tool.stats.words": "Words",
   "tool.stats.characters": "Characters",

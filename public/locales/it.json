@@ -13,6 +13,8 @@
   "tool.clear": "Cancella",
   "tool.export": "Esporta",
   "tool.upload": "Carica",
+  "tool.undo": "Annulla",
+  "tool.redo": "Ripeti",
   "tool.textarea-placeholder": "Incolla o digita il tuo testo qui... Funziona con qualsiasi lingua.",
   "tool.stats.words": "Parole",
   "tool.stats.characters": "Caratteri",

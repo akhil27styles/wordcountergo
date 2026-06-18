@@ -13,6 +13,8 @@
   "tool.clear": "清除",
   "tool.export": "导出",
   "tool.upload": "上传",
+  "tool.undo": "撤销",
+  "tool.redo": "重做",
   "tool.textarea-placeholder": "在此粘贴或输入文本... 支持所有语言。",
   "tool.stats.words": "字数",
   "tool.stats.characters": "字符",
